@@ -1,4 +1,6 @@
 using ClinicVp.DataBase;
+using ClinicVp.DataBase.Repositories;
+using ClinicVp.DataBase.Services;
 using ClinicVp.Repository;
 using ClinicVp.Services;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // Injeção de dependência
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ISpeciality, SpecialityRepository>();
 builder.Services.AddScoped<SpecialityService>();
 builder.Services.AddScoped<DbContext>();
