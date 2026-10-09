@@ -1,0 +1,4 @@
+@ClinicVp_HostAddress = http://localhost:5166
+
+GET {{ClinicVp_HostAddress}}/
+Accept: application/json
