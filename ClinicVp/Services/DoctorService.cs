@@ -29,7 +29,7 @@ namespace ClinicVp.DataBase.Services
                 Phone = d.Phone,
                 Bio = d.Bio,
                 AdmissionDate = d.AdmissionDate,
-                Active = d.Status == EStatusEmployee.ACTIVATE // Exemplo de regra
+                Active = d.Status == EStatusEmployee.ACTIVE // Exemplo de regra
             });
         }
 

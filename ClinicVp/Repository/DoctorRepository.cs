@@ -49,6 +49,6 @@ namespace ClinicVp.DataBase.Repositories
             await _context.Doctors.FirstOrDefaultAsync(d => d.Cpf == cpf);
 
         public async Task<IEnumerable<Doctor>> GetActiveDoctorsAsync() =>
-            await _context.Doctors.Where(d => d.Status == EStatusEmployee.ACTIVATE ).ToListAsync();
+            await _context.Doctors.Where(d => d.Status == EStatusEmployee.ACTIVE ).ToListAsync();
     }
 }

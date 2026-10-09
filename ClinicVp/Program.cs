@@ -1,5 +1,7 @@
 using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models.Enums;
+using ClinicVp.DataBase.Repositories;
+using ClinicVp.DataBase.Services;
 using ClinicVp.Repository;
 using ClinicVp.Services;
 using Microsoft.EntityFrameworkCore;
