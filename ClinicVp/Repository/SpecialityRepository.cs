@@ -25,5 +25,6 @@ namespace ClinicVp.Repository
         {
             return _db.Specialitys.ToList();
         }
+
     }
 }
