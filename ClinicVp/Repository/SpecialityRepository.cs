@@ -1,5 +1,6 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicVp.Repository
 {
@@ -13,17 +14,17 @@ namespace ClinicVp.Repository
             _db = _context;
         }
 
-        public int Add(Speciality speciality)
+        public async Task<int> Add(Speciality speciality)
         {
-            var response = _db.Specialitys.Add(speciality);
-            _db.SaveChanges();
+            var response = await _db.Specialitys.AddAsync(speciality);
+            await _db.SaveChangesAsync();
 
             return response.Entity.Id;
         }
 
-        public List<Speciality> GetAll()
+        public async Task<List<Speciality>> GetAll()
         {
-            return _db.Specialitys.ToList();
+            return await _db.Specialitys.ToListAsync();
         }
 
     }

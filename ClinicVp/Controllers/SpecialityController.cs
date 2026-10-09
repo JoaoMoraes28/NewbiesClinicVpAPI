@@ -1,4 +1,4 @@
-using ClinicVp.DTOs;
+using ClinicVp.DTOs.Speciality;
 using ClinicVp.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace ClinicVp.Controllers
         [HttpGet("")]
         async public Task<IActionResult> Get()
         {
-            var specialitys = _service.SelectSpeciality();
+            var specialitys = await _service.SelectSpeciality();
 
             return Ok(specialitys);
         }
@@ -27,7 +27,7 @@ namespace ClinicVp.Controllers
         [HttpPost("")]
         async public Task<IActionResult> Post([FromBody] SpecialityCreateDto body)
         {
-            var specialityId = _service.InsertSpeciality(body);
+            var specialityId = await _service.InsertSpeciality(body);
 
             return Ok(specialityId);
         }

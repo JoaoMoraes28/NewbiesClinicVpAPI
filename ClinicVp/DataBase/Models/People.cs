@@ -8,6 +8,7 @@ namespace ClinicVp.DataBase.Models
     public class People
     {
         [Key]
+        [Column("id")]
         public int Id { get; set; }
 
         [Column("name")]

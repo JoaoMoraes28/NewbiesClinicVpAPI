@@ -1,5 +1,5 @@
 ﻿using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs;
+using ClinicVp.DTOs.Speciality;
 using ClinicVp.Repository;
 
 namespace ClinicVp.Services
@@ -15,21 +15,21 @@ namespace ClinicVp.Services
             _repository = repository;
         }
 
-        public List<Speciality> SelectSpeciality()
+        public async Task<List<Speciality>> SelectSpeciality()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public List<Speciality> SelectSpecialityId(int id)
+        public async Task<List<Speciality>> SelectSpecialityId(int id)
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public int InsertSpeciality(SpecialityCreateDto specialityDto)
+        public async Task<int> InsertSpeciality(SpecialityCreateDto specialityDto)
         {
             Speciality speciality = new(specialityDto.SpecialityName);
 
-            var id = _repository.Add(speciality);
+            var id = await _repository.Add(speciality);
 
             return id;
         }

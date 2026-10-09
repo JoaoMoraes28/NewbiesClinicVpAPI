@@ -12,5 +12,7 @@ namespace ClinicVp.DataBase
         public DbSet<DoctorAddress> DoctorAddresses { get; set; }
         public DbSet<PatientAddress> PatientAddresses { get; set; }
 
+        public DbSet<Recepcionist> Recepcionists { get; set; }
+
     }
 }
