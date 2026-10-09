@@ -1,4 +1,4 @@
-﻿namespace ClinicVp.DTOs
+﻿namespace ClinicVp.DTOs.Speciality
 {
     public class SpecialityCreateDto
     {

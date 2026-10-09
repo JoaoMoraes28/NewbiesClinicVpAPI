@@ -8,5 +8,7 @@ namespace ClinicVp.DataBase
 
         public DbSet<Speciality> Specialitys { get; set; }
 
+        public DbSet<Recepcionist> Recepcionists { get; set; }
+
     }
 }

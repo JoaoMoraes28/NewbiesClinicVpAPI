@@ -5,9 +5,9 @@ namespace ClinicVp.Repository
     public interface ISpeciality
     {
 
-        int Add(Speciality speciality);
+        Task<int> Add(Speciality speciality);
 
-        List<Speciality> GetAll();
+        Task<List<Speciality>> GetAll();
 
     }
 }

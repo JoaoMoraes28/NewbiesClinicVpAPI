@@ -7,27 +7,30 @@ namespace ClinicVp.DataBase.Models
     public class Recepcionist : People
     {
 
+        [Column("admission_date")]
         public DateTime AdmissionDate { get; set; }
 
+        [Column("salary")]
         public decimal Salary { get; set; }
 
+        [Column("status")]
         public EStatusEmployee Status { get; set; }
 
+        [Column("password")]
         public string Password { get; set; }
 
+        [Column("must_change_password")]
         public bool MustChangePassword { get; set; }
 
         public Recepcionist(string name, string cpf, string email, EGender gender, string phone,
-            string photo, DateTime admissionDate, decimal salary, EStatusEmployee status,
-            string password, bool mustChangePassword)
+            string photo, decimal salary, EStatusEmployee status,
+            string password)
             : base(name, cpf, email, gender, phone, photo)
         {
 
-            AdmissionDate = admissionDate;
             Salary = salary;
             Status = status;
             Password = password;
-            MustChangePassword = mustChangePassword;
 
         }
 
