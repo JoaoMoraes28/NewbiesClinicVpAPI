@@ -1,3 +1,5 @@
+using ClinicVp.DataBase.Models.Enums;
+
 namespace ClinicVp.DataBase.DTOs
 {
     public class PatientCreateUpdateDto
@@ -8,9 +10,9 @@ namespace ClinicVp.DataBase.DTOs
         public string Phone { get; set; } = string.Empty;
         public string? Photo { get; set; }
         public string? Professional { get; set; }
-        public int Gender { get; set; }
-        public int CivilState { get; set; }
-        public int? BloodType { get; set; }
+        public EGender Gender { get; set; }
+        public ECivilState CivilState { get; set; }
+        public EBloodType? BloodType { get; set; }
         public decimal? Weight { get; set; }
         public int? Height { get; set; }
         public DateTime BornDate { get; set; }

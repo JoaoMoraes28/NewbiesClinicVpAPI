@@ -1,3 +1,5 @@
+using ClinicVp.DataBase.Models.Enums;
+
 namespace ClinicVp.DataBase.DTOs
 {
     public class DoctorCreateUpdateDto
@@ -11,7 +13,9 @@ namespace ClinicVp.DataBase.DTOs
         public int CrmUfId { get; set; }
         public string Password { get; set; } = string.Empty;
         public string? Bio { get; set; }
-        public int Gender { get; set; } // Ou o enum correspondente
+        public EGender Gender { get; set; }
+
+        public EStatusEmployee Status { get; set;}
     }
 
     public class DoctorResponseDto
