@@ -7,9 +7,6 @@ namespace ClinicVp.DataBase.Models
     [Table("doctor")]
     public class Doctor : People
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
 
         [Column("admission_date")]
         public DateTime AdmissionDate { get; set; } = DateTime.UtcNow;

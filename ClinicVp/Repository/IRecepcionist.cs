@@ -1,5 +1,5 @@
 ﻿using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs.Recepcionist;
+using ClinicVp.DTOs;
 
 namespace ClinicVp.Repository
 {
@@ -10,10 +10,10 @@ namespace ClinicVp.Repository
 
         Task<List<Recepcionist>> GetAll();
 
-        Task<List<Recepcionist>> GetId(int id);
+        Task<Recepcionist?> GetId(int id);
 
-        Task<Recepcionist> Update(Recepcionist recepcionist, RecepcionistCreateDto newRecepcionist);
+        Task<Recepcionist> Update(Recepcionist recepcionist, RecepcionistDto newRecepcionist);
 
-        Task Delete(int id);
+        Task Delete(Recepcionist recepcionist);
     }
 }
