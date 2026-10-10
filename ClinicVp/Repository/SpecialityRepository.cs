@@ -17,6 +17,7 @@ namespace ClinicVp.Repository
         public async Task<int> Add(Speciality speciality)
         {
             var response = await _db.Specialitys.AddAsync(speciality);
+
             await _db.SaveChangesAsync();
 
             return response.Entity.Id;

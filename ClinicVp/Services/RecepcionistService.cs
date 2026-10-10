@@ -1,5 +1,5 @@
 ﻿using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs.Recepcionist;
+using ClinicVp.DTOs;
 using ClinicVp.Repository;
 
 namespace ClinicVp.Services
@@ -19,12 +19,12 @@ namespace ClinicVp.Services
             return await _repository.GetAll();
         }
 
-        public async Task<List<Recepcionist>> SelectRecepcionistId(int id)
+        public async Task<Recepcionist?> SelectRecepcionistId(int id)
         {
             return await _repository.GetId(id);
         }
 
-        public async Task<int> InsertRecepcionist(RecepcionistCreateDto body)
+        public async Task<int> InsertRecepcionist(RecepcionistDto body)
         {
             Recepcionist newRecepcionist = new(body.Name, body.Cpf, body.Email, body.Gender, body.Phone, body.Photo, body.Salary, body.Status, body.Password);
 
@@ -33,34 +33,29 @@ namespace ClinicVp.Services
             return idRecepcionist;
         }
 
-        public async Task<Recepcionist?> UpdateRecepcionist(RecepcionistCreateDto body, int id)
+        public async Task<Recepcionist> UpdateRecepcionist(RecepcionistDto body, int id)
         {
 
             var verifyId = await SelectRecepcionistId(id);
 
             if (verifyId == null)
-            {
-                return null;
-            }
+                throw new KeyNotFoundException();
 
-            var newRecepcionist = await _repository.Update(verifyId[0], body);
+
+            var newRecepcionist = await _repository.Update(verifyId, body);
 
             return newRecepcionist;
 
         }
 
-        public async Task<bool> DeleteRecepcionist(int id)
+        public async Task DeleteRecepcionist(int id)
         {
-            var verifyId = SelectRecepcionistId(id);
+            var verifyId = await SelectRecepcionistId(id);
 
             if (verifyId == null)
-            {
-                return false;
-            }
+                throw new KeyNotFoundException();
 
-            await _repository.Delete(id);
-
-            return true;
+            await _repository.Delete(verifyId);
         }
 
     }

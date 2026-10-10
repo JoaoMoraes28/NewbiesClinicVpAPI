@@ -1,4 +1,4 @@
-﻿using ClinicVp.DTOs.Recepcionist;
+﻿using ClinicVp.DTOs;
 using ClinicVp.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +33,7 @@ namespace ClinicVp.Controllers
         }
 
         [HttpPost("")]
-        async public Task<IActionResult> Post([FromBody] RecepcionistCreateDto body)
+        async public Task<IActionResult> Post([FromBody] RecepcionistDto body)
         {
             var idRecepcionit = await _service.InsertRecepcionist(body);
 
@@ -41,7 +41,7 @@ namespace ClinicVp.Controllers
         }
 
         [HttpPut("{id:int}")]
-        async public Task<IActionResult> Put([FromBody] RecepcionistCreateDto body, int id)
+        async public Task<IActionResult> Put([FromBody] RecepcionistDto body, int id)
         {
             var newRecepcionist = await _service.UpdateRecepcionist(body, id);
 
@@ -56,12 +56,7 @@ namespace ClinicVp.Controllers
         [HttpDelete("{id:int}")]
         async public Task<IActionResult> Delete(int id)
         {
-            var delete = await _service.DeleteRecepcionist(id);
-
-            if (!delete)
-            {
-                return NotFound();
-            }
+            await _service.DeleteRecepcionist(id);
 
             return Ok(); ;
         }

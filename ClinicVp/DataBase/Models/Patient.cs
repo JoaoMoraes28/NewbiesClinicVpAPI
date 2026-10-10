@@ -7,17 +7,10 @@ namespace ClinicVp.DataBase.Models
     [Table("patient")]
     public class Patient : People
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
 
         [Column("professional")]
         [StringLength(255, ErrorMessage = "A profissão não pode ultrapassar 255 caracteres.")]
         public string? Professional { get; set; }
-
-        [Column("gender")]
-        [Required(ErrorMessage = "O campo de selecionar gênero é obrigatório.")]
-        public EGender GenderOption { get; set; }
 
         [Column("civil_state")]
         [Required(ErrorMessage = "O estado civil é obrigatório.")]
@@ -55,9 +48,9 @@ namespace ClinicVp.DataBase.Models
 
         public Patient(
             string name, string cpf, string email, EGender gender,
-            string phone, string photo, ECivilState civilState, 
-            DateTime bornDate, string? professional = null, 
-            EBloodType? bloodType = null, decimal? weight = null, 
+            string phone, string photo, ECivilState civilState,
+            DateTime bornDate, string? professional = null,
+            EBloodType? bloodType = null, decimal? weight = null,
             int? height = null, string? phoneEmergency = null, string? notes = null)
             : base(name, cpf, email, gender, phone, photo)
         {

@@ -1,11 +1,11 @@
-﻿namespace ClinicVp.DTOs.Speciality
+﻿namespace ClinicVp.DTOs
 {
-    public class SpecialityCreateDto
+    public class SpecialityDto
     {
 
         public string SpecialityName { get; set; }
 
-        public SpecialityCreateDto(string specialityName)
+        public SpecialityDto(string specialityName)
         {
             SpecialityName = specialityName;
         }

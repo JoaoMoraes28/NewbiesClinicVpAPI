@@ -1,4 +1,4 @@
-using ClinicVp.DTOs.Speciality;
+using ClinicVp.DTOs;
 using ClinicVp.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +25,7 @@ namespace ClinicVp.Controllers
         }
 
         [HttpPost("")]
-        async public Task<IActionResult> Post([FromBody] SpecialityCreateDto body)
+        async public Task<IActionResult> Post([FromBody] SpecialityDto body)
         {
             var specialityId = await _service.InsertSpeciality(body);
 

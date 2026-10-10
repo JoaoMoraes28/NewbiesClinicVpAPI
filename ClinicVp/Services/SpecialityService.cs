@@ -1,5 +1,6 @@
-﻿using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs.Speciality;
+﻿using ClinicVp.DataBase;
+using ClinicVp.DataBase.Models;
+using ClinicVp.DTOs;
 using ClinicVp.Repository;
 
 namespace ClinicVp.Services
@@ -8,11 +9,12 @@ namespace ClinicVp.Services
     {
 
         private readonly ISpeciality _repository;
+        private readonly AppDbContext _db;
 
-
-        public SpecialityService(ISpeciality repository)
+        public SpecialityService(AppDbContext db, ISpeciality repository)
         {
             _repository = repository;
+            _db = db;
         }
 
         public async Task<List<Speciality>> SelectSpeciality()
@@ -20,12 +22,7 @@ namespace ClinicVp.Services
             return await _repository.GetAll();
         }
 
-        public async Task<List<Speciality>> SelectSpecialityId(int id)
-        {
-            return await _repository.GetAll();
-        }
-
-        public async Task<int> InsertSpeciality(SpecialityCreateDto specialityDto)
+        public async Task<int> InsertSpeciality(SpecialityDto specialityDto)
         {
             Speciality speciality = new(specialityDto.SpecialityName);
 
