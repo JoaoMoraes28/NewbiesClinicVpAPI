@@ -50,7 +50,7 @@ namespace ClinicVp.DataBase.Models
         // public virtual Uf? Uf { get; set; }
 
         public DoctorAddress(
-            int doctorId, int ufId, string city, 
+            int doctorId, int ufId, string city,
             string district, string street, string number, string cep)
         {
             DoctorId = doctorId;
