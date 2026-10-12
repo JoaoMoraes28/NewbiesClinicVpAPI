@@ -17,6 +17,7 @@ namespace ClinicVp.ConfigurationExtensions
             services.AddScoped<ISpeciality, SpecialityRepository>();
             services.AddScoped<IRecepcionist, RecepcionistRepository>();
             services.AddScoped<IUf, UfRepository>();
+            services.AddScoped<IRecepcoinistAddress, RecepcionistAddressRepository>();
             services.AddScoped<SpecialityService>();
             services.AddScoped<RecepcionistService>();
             services.AddScoped<UfService>();

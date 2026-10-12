@@ -1,5 +1,7 @@
 ﻿using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs;
+using ClinicVp.DataBase.Models.Views;
+using ClinicVp.DTOs.RecepcionistAddress;
+using ClinicVp.DTOs.RecepcionistDto;
 using ClinicVp.Repository;
 
 namespace ClinicVp.Services
@@ -7,56 +9,123 @@ namespace ClinicVp.Services
     public class RecepcionistService
     {
 
-        private readonly IRecepcionist _repository;
+        private readonly IRecepcionist _repositoryRecepcionist;
+        private readonly IRecepcoinistAddress _repositoryAddress;
 
-        public RecepcionistService(IRecepcionist repository)
+        public RecepcionistService(IRecepcionist repositoryRecepcionist, IRecepcoinistAddress repositoryAddress)
         {
-            _repository = repository;
+            _repositoryRecepcionist = repositoryRecepcionist;
+            _repositoryAddress = repositoryAddress;
         }
 
-        public async Task<List<Recepcionist>> SelectAllRecepcionist()
+        public async Task<List<RecepcionistResponseDto>> SelectAllRecepcionist()
         {
-            return await _repository.GetAll();
+            var recepcionistsDatas = await _repositoryRecepcionist.GetAll();
+
+            List<RecepcionistResponseDto> listRecepcionistResponse = [];
+
+            foreach (var item in recepcionistsDatas)
+            {
+                var response = await FormatRecepcionist(item);
+
+                listRecepcionistResponse.Add(response);
+
+            }
+
+            return listRecepcionistResponse;
         }
 
-        public async Task<Recepcionist?> SelectRecepcionistId(int id)
+        public async Task<RecepcionistResponseDto?> SelectRecepcionistId(int id)
         {
-            return await _repository.GetId(id);
+            var recepcionist = await _repositoryRecepcionist.GetId(id) ?? throw new KeyNotFoundException();
+
+            return await FormatRecepcionist(recepcionist);
         }
 
-        public async Task<int> InsertRecepcionist(RecepcionistDto body)
+        public async Task<Recepcionist?> SelectRecepcionistEntityId(int id)
         {
-            Recepcionist newRecepcionist = new(body.Name, body.Cpf, body.Email, body.Gender, body.Phone, body.Photo, body.Salary, body.Status, body.Password);
-
-            var idRecepcionist = await _repository.Add(newRecepcionist);
-
-            return idRecepcionist;
+            return await _repositoryRecepcionist.GetEntityId(id) ?? throw new KeyNotFoundException();
         }
 
-        public async Task<Recepcionist> UpdateRecepcionist(RecepcionistDto body, int id)
+        public async Task<int> InsertRecepcionist(RecepcionistWriteDto body)
         {
+            try
+            {
+                Recepcionist newRecepcionist = new(body.Recepcionist.Name, body.Recepcionist.Cpf,
+                    body.Recepcionist.Email, body.Recepcionist.Gender, body.Recepcionist.Phone,
+                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, body.Recepcionist.Password);
 
-            var verifyId = await SelectRecepcionistId(id);
 
-            if (verifyId == null)
-                throw new KeyNotFoundException();
+                var idRecepcionist = await _repositoryRecepcionist.Add(newRecepcionist);
 
+                RecepcionistAddress newAddress = new(idRecepcionist, body.Address.UfId, body.Address.City,
+                    body.Address.District, body.Address.Street, body.Address.Number, body.Address.Cep);
 
-            var newRecepcionist = await _repository.Update(verifyId, body);
+                await _repositoryAddress.Add(newAddress);
 
-            return newRecepcionist;
+                return idRecepcionist;
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<RecepcionistResponseDto> UpdateRecepcionist(RecepcionistWriteDto body, int id)
+        {
+            try
+            {
+                var verifyId = await SelectRecepcionistEntityId(id);
+
+                Recepcionist recepcionist = new(body.Recepcionist.Name, body.Recepcionist.Cpf,
+                    body.Recepcionist.Email, body.Recepcionist.Gender, body.Recepcionist.Phone,
+                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, body.Recepcionist.Password);
+
+                var newRecepcionist = await _repositoryRecepcionist.Update(verifyId, recepcionist);
+
+                RecepcionistAddress newAddress = new(id, body.Address.UfId, body.Address.City,
+                   body.Address.District, body.Address.Street, body.Address.Number, body.Address.Cep);
+
+                var oldAddressRecepcionist = await _repositoryAddress.Get(id);
+
+                await _repositoryAddress.Update(oldAddressRecepcionist, newAddress);
+
+                return await SelectRecepcionistId(id);
+            }
+            catch
+            {
+                throw;
+            }
 
         }
 
         public async Task DeleteRecepcionist(int id)
         {
-            var verifyId = await SelectRecepcionistId(id);
+            var verifyId = await SelectRecepcionistEntityId(id);
 
             if (verifyId == null)
                 throw new KeyNotFoundException();
 
-            await _repository.Delete(verifyId);
+            await _repositoryRecepcionist.Delete(verifyId);
         }
 
+        public async Task<RecepcionistResponseDto> FormatRecepcionist(RecepcionistData? recepcionistData)
+        {
+            try
+            {
+                var recepcionist = new RecepcionistResponseBase(recepcionistData.Id, recepcionistData.Name, recepcionistData.Salary, recepcionistData.Cpf, recepcionistData.AdmissionDate, recepcionistData.Status,
+                recepcionistData.Phone, recepcionistData.Email, recepcionistData.Photo, recepcionistData.Gender);
+
+                var address = new RecepcionistAddressResponseDto(recepcionistData.City, recepcionistData.District, recepcionistData.Street, recepcionistData.Number, recepcionistData.Cep, recepcionistData.UfAddress);
+
+                return new RecepcionistResponseDto(recepcionist, address);
+            }
+            catch
+            {
+                throw new KeyNotFoundException();
+            }
+
+        }
     }
 }

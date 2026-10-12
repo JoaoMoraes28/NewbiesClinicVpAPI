@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClinicVp.DataBase.Models
 {
+    [Table("recepcionist_address")]
     public class RecepcionistAddress
     {
 

@@ -1,7 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Enums;
-using ClinicVp.DTOs;
+using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicVp.Repository
@@ -21,6 +21,8 @@ namespace ClinicVp.Repository
 
             var response = await _db.Recepcionists.AddAsync(recepcionist);
 
+            await _db.SaveChangesAsync();
+
             return response.Entity.Id;
         }
 
@@ -31,17 +33,22 @@ namespace ClinicVp.Repository
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<Recepcionist>> GetAll()
+        public async Task<List<RecepcionistData>> GetAll()
         {
-            return await _db.Recepcionists.Where(r => r.Status != EStatusEmployee.DESACTIVE).ToListAsync();
+            return await _db.RecepcionistData.Where(r => r.Status != EStatusEmployee.DESACTIVE).ToListAsync();
         }
 
-        public async Task<Recepcionist?> GetId(int id)
+        public async Task<RecepcionistData?> GetId(int id)
         {
-            return await _db.Recepcionists.FirstOrDefaultAsync(e => e.Id == id);
+            return await _db.RecepcionistData.FirstOrDefaultAsync(r => r.Id == id && r.Status == EStatusEmployee.ACTIVE);
         }
 
-        public async Task<Recepcionist> Update(Recepcionist recepcionist, RecepcionistDto newRecepcionist)
+        public async Task<Recepcionist?> GetEntityId(int id)
+        {
+            return await _db.Recepcionists.FirstOrDefaultAsync(r => r.Id == id && r.Status == EStatusEmployee.ACTIVE);
+        }
+
+        public async Task<Recepcionist> Update(Recepcionist recepcionist, Recepcionist newRecepcionist)
         {
             recepcionist.Name = newRecepcionist.Name;
             recepcionist.Cpf = newRecepcionist.Cpf;

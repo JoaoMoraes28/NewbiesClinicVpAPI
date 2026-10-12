@@ -1,6 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicVp
 {
@@ -14,14 +15,29 @@ namespace ClinicVp
             _db = context;
         }
 
-        public Task Add(RecepcionistAddress address)
+        public async Task Add(RecepcionistAddress address)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(address.RecepcionistId);
+            await _db.RecepcionistAddress.AddAsync(address);
+
+            await _db.SaveChangesAsync();
         }
 
-        public Task<RecepcionistAddress> Get(int idRecepcionist)
+        public async Task<RecepcionistAddress?> Get(int idRecepcionist)
         {
-            throw new NotImplementedException();
+            return await _db.RecepcionistAddress.FirstOrDefaultAsync(a => a.RecepcionistId == idRecepcionist);
+        }
+
+        public async Task Update(RecepcionistAddress address, RecepcionistAddress newAddress)
+        {
+            address.Cep = newAddress.Cep;
+            address.City = newAddress.City;
+            address.Number = newAddress.Number;
+            address.Street = newAddress.Street;
+            address.District = newAddress.District;
+            address.UfId = newAddress.UfId;
+
+            await _db.SaveChangesAsync();
         }
     }
 }

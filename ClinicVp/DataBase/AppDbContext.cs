@@ -1,4 +1,5 @@
 ﻿using ClinicVp.DataBase.Models;
+using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicVp.DataBase
@@ -13,6 +14,13 @@ namespace ClinicVp.DataBase
         public DbSet<DoctorAddress> DoctorAddresses { get; set; }
         public DbSet<PatientAddress> PatientAddresses { get; set; }
         public DbSet<Recepcionist> Recepcionists { get; set; }
+        public DbSet<RecepcionistData> RecepcionistData { get; set; }
+        public DbSet<RecepcionistAddress> RecepcionistAddress { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RecepcionistData>().HasNoKey().ToView("recepcionist_data");
+        }
 
     }
 }
