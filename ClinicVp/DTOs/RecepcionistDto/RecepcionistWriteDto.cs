@@ -1,8 +1,24 @@
 ﻿using ClinicVp.DataBase.Models.Enums;
+using ClinicVp.DTOs.RecepcionistAddressDto;
 
-namespace ClinicVp.DTOs
+namespace ClinicVp.DTOs.RecepcionistDto
 {
-    public class RecepcionistDto
+    public class RecepcionistWriteDto
+    {
+
+        public RecepcionistBase Recepcionist { get; set; }
+
+        public RecepcionistWritetAddressDto Address { get; set; }
+
+        public RecepcionistWriteDto(RecepcionistBase recepcionist, RecepcionistWritetAddressDto address)
+        {
+            Recepcionist = recepcionist;
+            Address = address;
+        }
+
+    }
+
+    public class RecepcionistBase
     {
 
         public string Name { get; set; }
@@ -23,7 +39,7 @@ namespace ClinicVp.DTOs
 
         public EGender Gender { get; set; }
 
-        public RecepcionistDto(string name, decimal salary, string cpf, EStatusEmployee status, string phone, string email, string? photo, string password, EGender gender)
+        public RecepcionistBase(string name, decimal salary, string cpf, EStatusEmployee status, string phone, string email, string? photo, string password, EGender gender)
         {
             Name = name;
             Salary = salary;
