@@ -6,7 +6,7 @@ namespace ClinicVp.Repository
     public interface IRecepcionist
     {
 
-        Task<int> Add(Recepcionist recepcionist);
+        Task<Recepcionist> Add(Recepcionist recepcionist);
 
         Task<List<RecepcionistData>> GetAll();
 

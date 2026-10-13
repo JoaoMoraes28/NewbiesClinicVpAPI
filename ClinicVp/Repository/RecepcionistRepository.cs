@@ -16,14 +16,14 @@ namespace ClinicVp.Repository
             _db = context;
         }
 
-        public async Task<int> Add(Recepcionist recepcionist)
+        public async Task<Recepcionist> Add(Recepcionist recepcionist)
         {
 
             var response = await _db.Recepcionists.AddAsync(recepcionist);
 
             await _db.SaveChangesAsync();
 
-            return response.Entity.Id;
+            return response.Entity;
         }
 
         public async Task Delete(Recepcionist recepcionist)

@@ -1,8 +1,11 @@
-﻿using ClinicVp.DataBase.Models;
+﻿using ClinicVp.ConfigurationExtensions.HashedPassword;
+using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Views;
 using ClinicVp.DTOs.RecepcionistAddress;
 using ClinicVp.DTOs.RecepcionistDto;
+using ClinicVp.DTOs.ResponsesDefault;
 using ClinicVp.Repository;
+using System.Security.Cryptography;
 
 namespace ClinicVp.Services
 {
@@ -47,24 +50,27 @@ namespace ClinicVp.Services
             return await _repositoryRecepcionist.GetEntityId(id) ?? throw new KeyNotFoundException();
         }
 
-        public async Task<int> InsertRecepcionist(RecepcionistWriteDto body)
+        public async Task<ResponseWriteDefault> InsertRecepcionist(RecepcionistWriteDto body)
         {
             try
             {
+                var password = RandomNumberGenerator.GetHexString(8);
+                var passwordHashed = SecurityPassword.GetPassHashed(password);
+
                 Recepcionist newRecepcionist = new(body.Recepcionist.Name, body.Recepcionist.Cpf,
                     body.Recepcionist.Email, body.Recepcionist.Gender, body.Recepcionist.Phone,
-                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, body.Recepcionist.Password);
+                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, password);
 
+                var recepcionist = await _repositoryRecepcionist.Add(newRecepcionist);
 
-                var idRecepcionist = await _repositoryRecepcionist.Add(newRecepcionist);
-
-                RecepcionistAddress newAddress = new(idRecepcionist, body.Address.UfId, body.Address.City,
+                RecepcionistAddress newAddress = new(recepcionist.Id, body.Address.UfId, body.Address.City,
                     body.Address.District, body.Address.Street, body.Address.Number, body.Address.Cep);
 
                 await _repositoryAddress.Add(newAddress);
 
-                return idRecepcionist;
+                ResponseWriteDefault response = new(recepcionist.Id, recepcionist.Email, password);
 
+                return response;
             }
             catch
             {
@@ -80,7 +86,7 @@ namespace ClinicVp.Services
 
                 Recepcionist recepcionist = new(body.Recepcionist.Name, body.Recepcionist.Cpf,
                     body.Recepcionist.Email, body.Recepcionist.Gender, body.Recepcionist.Phone,
-                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, body.Recepcionist.Password);
+                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, verifyId.Password);
 
                 var newRecepcionist = await _repositoryRecepcionist.Update(verifyId, recepcionist);
 
@@ -108,6 +114,8 @@ namespace ClinicVp.Services
                 throw new KeyNotFoundException();
 
             await _repositoryRecepcionist.Delete(verifyId);
+
+            ResponseDeleteDefault response = new(id, "Recepcionist", $"Recepcionist de id {id} deletado.");
         }
 
         public async Task<RecepcionistResponseDto> FormatRecepcionist(RecepcionistData? recepcionistData)
