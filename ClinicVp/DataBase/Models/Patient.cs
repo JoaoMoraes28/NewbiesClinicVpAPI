@@ -29,7 +29,7 @@ namespace ClinicVp.DataBase.Models
 
         [Column("born_date")]
         [Required(ErrorMessage = "A data de nascimento é obrigatória.")]
-        public DateTime BornDate { get; set; }
+        public DateOnly BornDate { get; set; }
 
         [Column("phone_emergency")]
         [StringLength(11, ErrorMessage = "O telefone de emergência deve ter no máximo 11 caracteres.")]
@@ -40,7 +40,7 @@ namespace ClinicVp.DataBase.Models
         public string? Notes { get; set; }
 
         [Column("record_date")]
-        public DateTime RecordDate { get; set; } = DateTime.UtcNow;
+        public DateOnly RecordDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow) ;
 
         [Column("active")]
         [Required]
@@ -49,7 +49,7 @@ namespace ClinicVp.DataBase.Models
         public Patient(
             string name, string cpf, string email, EGender gender,
             string phone, string photo, ECivilState civilState,
-            DateTime bornDate, string? professional = null,
+            DateOnly bornDate, string? professional = null,
             EBloodType? bloodType = null, decimal? weight = null,
             int? height = null, string? phoneEmergency = null, string? notes = null)
             : base(name, cpf, email, gender, phone, photo)

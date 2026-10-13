@@ -1,10 +1,15 @@
 using ClinicVp.DataBase.Models;
 
-namespace ClinicVp.DataBase.Repositories
+namespace ClinicVp.Repository
 {
-    public interface IPatientRepository : IRepository<Patient>
+
+    public interface IPatientRepository
     {
-        Task<Patient?> GetByCpfAsync(string cpf);
-        Task<IEnumerable<Patient>> GetActivePatientsAsync();
+        Task<IEnumerable<Patient>> GetAllAsync();
+        Task<Patient?> GetByIdAsync(int id);
+        Task<int> AddAsync(Patient patient);
+
+        Task UpdateAsync(Patient patient);
+        Task DeleteAsync(int id);
     }
 }

@@ -1,13 +1,14 @@
 using ClinicVp.DataBase.DTOs;
+using ClinicVp.DTOs.PatientDto;
 
-namespace ClinicVp.DataBase.Services
+namespace ClinicVp.Services
 {
     public interface IPatientService
     {
         Task<IEnumerable<PatientResponseDto>> GetAllPatientsAsync();
         Task<PatientResponseDto?> GetPatientByIdAsync(int id);
-        Task<PatientResponseDto> CreatePatientAsync(PatientCreateUpdateDto dto);
-        Task UpdatePatientAsync(int id, PatientCreateUpdateDto dto);
+        Task<PatientResponseDto> CreatePatientAsync(PatientWriteDto dto);
+        Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto);
         Task DeletePatientAsync(int id);
     }
 }

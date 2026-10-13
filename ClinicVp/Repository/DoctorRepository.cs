@@ -1,9 +1,11 @@
+using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Enums;
-using ClinicVp.DataBase.Repositories;
+using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicVp.DataBase.Repositories
+
+namespace ClinicVp.Repository
 {
     public class DoctorRepository : IDoctorRepository
     {
@@ -20,10 +22,12 @@ namespace ClinicVp.DataBase.Repositories
         public async Task<Doctor?> GetByIdAsync(int id) => 
             await _context.Doctors.FindAsync(id);
 
-        public async Task AddAsync(Doctor entity)
+        public async Task<int> AddAsync(Doctor entity)
         {
-            await _context.Doctors.AddAsync(entity);
+            var id = await _context.Doctors.AddAsync(entity);
             await _context.SaveChangesAsync();
+
+            return id.Entity.Id;
         }
 
         public async Task UpdateAsync(Doctor entity)

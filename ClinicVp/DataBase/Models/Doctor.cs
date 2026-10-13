@@ -9,7 +9,7 @@ namespace ClinicVp.DataBase.Models
     {
 
         [Column("admission_date")]
-        public DateTime AdmissionDate { get; set; } = DateTime.UtcNow;
+        public DateOnly AdmissionDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         [Column("crm")]
         [Required(ErrorMessage = "O CRM é obrigatório.")]
@@ -40,12 +40,11 @@ namespace ClinicVp.DataBase.Models
 
         public Doctor(
             string name, string cpf, string email, EGender gender,
-            string phone, string photo, DateTime admissionDate,
+            string phone, string photo,
             string crm, int crmUfId, string password,
             EStatusEmployee status, string? bio = null)
             : base(name, cpf, email, gender, phone, photo)
         {
-            AdmissionDate = admissionDate;
             Crm = crm;
             CrmUfId = crmUfId;
             Password = password;
