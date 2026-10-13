@@ -1,4 +1,4 @@
-namespace ClinicVp.DataBase.Repositories
+namespace ClinicVp.DataBase.Repository
 {
     public interface IRepository<T> where T : class
     {

@@ -1,6 +1,6 @@
 using ClinicVp.DataBase.Models;
 
-namespace ClinicVp.DataBase.Repositories
+namespace ClinicVp.DataBase.Repository
 {
     public interface IDoctorAddressRepository : IRepository<DoctorAddress>
     {

@@ -20,6 +20,7 @@ namespace ClinicVp.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RecepcionistData>().HasNoKey().ToView("recepcionist_data");
+            modelBuilder.Entity<DoctorData>().HasNoKey().ToView("doctor_data");
         }
 
     }

@@ -1,7 +1,12 @@
+using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
+using ClinicVp.DataBase.Models.Enums;
+using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicVp.DataBase.Repositories
+
+
+namespace ClinicVp.Repository
 {
     public class PatientRepository : IPatientRepository
     {
@@ -18,10 +23,11 @@ namespace ClinicVp.DataBase.Repositories
         public async Task<Patient?> GetByIdAsync(int id) => 
             await _context.Patients.FindAsync(id);
 
-        public async Task AddAsync(Patient entity)
+        public async Task<int> AddAsync(Patient entity)
         {
-            await _context.Patients.AddAsync(entity);
+            var idPatient = await _context.Patients.AddAsync(entity);
             await _context.SaveChangesAsync();
+            return idPatient.Entity.Id;
         }
 
         public async Task UpdateAsync(Patient entity)
@@ -39,9 +45,6 @@ namespace ClinicVp.DataBase.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<Patient?> GetByCpfAsync(string cpf) =>
-            await _context.Patients.FirstOrDefaultAsync(p => p.Cpf == cpf);
 
         public async Task<IEnumerable<Patient>> GetActivePatientsAsync() =>
             await _context.Patients.Where(p => p.Active).ToListAsync();

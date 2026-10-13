@@ -1,9 +1,10 @@
 
 using ClinicVp.DataBase.DTOs;
 using ClinicVp.DataBase.Models;
-using ClinicVp.DataBase.Repositories;
+using ClinicVp.Repository;
+using ClinicVp.DTOs.PatientDto;
 
-namespace ClinicVp.DataBase.Services
+namespace ClinicVp.Services
 {
     public class PatientService : IPatientService
     {
@@ -49,11 +50,8 @@ namespace ClinicVp.DataBase.Services
             };
         }
 
-        public async Task<PatientResponseDto> CreatePatientAsync(PatientCreateUpdateDto dto)
+        public async Task<PatientResponseDto> CreatePatientAsync(PatientWriteDto dto)
         {
-            var existingPatient = await _patientRepository.GetByCpfAsync(dto.Cpf);
-            if (existingPatient != null)
-                throw new InvalidOperationException("Já existe um paciente cadastrado com este CPF.");
 
             var patient = new Patient(
                 dto.Name, dto.Cpf, dto.Email, dto.Gender,
@@ -77,12 +75,14 @@ namespace ClinicVp.DataBase.Services
             };
         }
 
-        public async Task UpdatePatientAsync(int id, PatientCreateUpdateDto dto)
+        public async Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto)
         {
             var patient = await _patientRepository.GetByIdAsync(id);
             if (patient == null) throw new KeyNotFoundException("Paciente não encontrado.");
 
             await _patientRepository.UpdateAsync(patient);
+            
+            return await GetPatientByIdAsync(id);
         }
 
         public async Task DeletePatientAsync(int id)

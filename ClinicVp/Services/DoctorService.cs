@@ -1,9 +1,15 @@
-using ClinicVp.DataBase.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Enums;
-using ClinicVp.DataBase.Repositories;
+using ClinicVp.DataBase.Models.Views;
+using ClinicVp;
+using ClinicVp.Repository;
+using ClinicVp.DTOs.DoctorDto;
 
-namespace ClinicVp.DataBase.Services
+namespace ClinicVp.Services
 {
     public class DoctorService : IDoctorService
     {
@@ -17,80 +23,77 @@ namespace ClinicVp.DataBase.Services
         public async Task<IEnumerable<DoctorResponseDto>> GetAllDoctorsAsync()
         {
             var doctors = await _doctorRepository.GetAllAsync();
-            
-            // Mapeamento manual ou via AutoMapper para ResponseDto
-            return doctors.Select(d => new DoctorResponseDto
-            {
-                Id = d.Id,
-                Name = d.Name,
-                Crm = d.Crm,
-                Cpf = d.Cpf,
-                Email = d.Email,
-                Phone = d.Phone,
-                Bio = d.Bio,
-                AdmissionDate = d.AdmissionDate,
-                Active = d.Status == EStatusEmployee.ACTIVE // Exemplo de regra
-            });
+
+            return doctors.Select(d => new DoctorResponseDto(
+                new DoctorResponseBase(
+                    d.Id, d.Name, d.Crm, d.CrmUfId, d.Cpf, d.Email,
+                    d.Phone, d.Photo, d.Gender, d.Status, d.Bio, d.AdmissionDate
+                )
+            ));
         }
 
         public async Task<DoctorResponseDto?> GetDoctorByIdAsync(int id)
         {
-            var d = await _doctorRepository.GetByIdAsync(id);
-            if (d == null) return null;
+            var d = await _doctorRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Médico não encontrado.");
 
-            return new DoctorResponseDto
-            {
-                Id = d.Id,
-                Name = d.Name,
-                Crm = d.Crm,
-                Cpf = d.Cpf,
-                Email = d.Email,
-                Phone = d.Phone,
-                Bio = d.Bio,
-                AdmissionDate = d.AdmissionDate
-            };
-        }
-
-        public async Task<DoctorResponseDto> CreateDoctorAsync(DoctorCreateUpdateDto dto)
-        {
-            // Validações de negócio (ex: verificar se CRM ou CPF já existem)
-            var existingDoctor = await _doctorRepository.GetByCpfAsync(dto.Cpf);
-            if (existingDoctor != null)
-                throw new InvalidOperationException("Já existe um médico cadastrado com este CPF.");
-
-            var doctor = new Doctor(
-                dto.Name, dto.Cpf, dto.Email, dto.Gender,
-                dto.Phone, dto.Photo ?? string.Empty, DateTime.UtcNow,
-                dto.Crm, dto.CrmUfId, dto.Password, dto.Status, dto.Bio
+            var responseBase = new DoctorResponseBase(
+                d.Id, d.Name, d.Crm, d.CrmUfId, d.Cpf, d.Email,
+                d.Phone, d.Photo, d.Gender, d.Status, d.Bio, d.AdmissionDate
             );
 
-            await _doctorRepository.AddAsync(doctor);
-
-            return new DoctorResponseDto
-            {
-                Id = doctor.Id,
-                Name = doctor.Name,
-                Crm = doctor.Crm,
-                Cpf = doctor.Cpf,
-                Email = doctor.Email,
-                Phone = doctor.Phone,
-                Bio = doctor.Bio,
-                AdmissionDate = doctor.AdmissionDate
-            };
+            return new DoctorResponseDto(responseBase);
         }
 
-        public async Task UpdateDoctorAsync(int id, DoctorCreateUpdateDto dto)
+        public async Task<Doctor> GetDoctorEntityIdAsync(int id)
         {
-            var doctor = await _doctorRepository.GetByIdAsync(id);
-            if (doctor == null) throw new KeyNotFoundException("Médico não encontrado.");
+            return await _doctorRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Médico não encontrado.");
+        }
 
-            // Atualiza as propriedades necessárias...
+        public async Task<DoctorResponseDto> CreateDoctorAsync(DoctorWriteDto dto)
+        {
+            var existingDoctor = await _doctorRepository.GetByCpfAsync(dto.Doctor.Cpf);
+            if (existingDoctor != null)
+            {
+                throw new InvalidOperationException("Já existe um médico cadastrado com este CPF.");
+            }
+
+            var doctor = new Doctor(
+                dto.Doctor.Name, dto.Doctor.Cpf, dto.Doctor.Email, dto.Doctor.Gender,
+                dto.Doctor.Phone, dto.Doctor.Photo ?? string.Empty,
+                dto.Doctor.Crm, dto.Doctor.CrmUfId, dto.Doctor.Password, dto.Doctor.Status, dto.Doctor.Bio
+            );
+
+            var idDoctor = await _doctorRepository.AddAsync(doctor);
+
+            return await GetDoctorByIdAsync(idDoctor);
+        }
+
+        public async Task<DoctorResponseDto> UpdateDoctorAsync(int id, DoctorWriteDto dto)
+        {
+            var doctor = await GetDoctorEntityIdAsync(id);
+
+            doctor.Name = dto.Doctor.Name;
+            doctor.Cpf = dto.Doctor.Cpf;
+            doctor.Email = dto.Doctor.Email;
+            doctor.Gender = dto.Doctor.Gender;
+            doctor.Phone = dto.Doctor.Phone;
+            doctor.Photo = dto.Doctor.Photo ?? string.Empty;
+            doctor.Crm = dto.Doctor.Crm;
+            doctor.CrmUfId = dto.Doctor.CrmUfId;
+            doctor.Password = dto.Doctor.Password;
+            doctor.Status = dto.Doctor.Status;
+            doctor.Bio = dto.Doctor.Bio;
+
             await _doctorRepository.UpdateAsync(doctor);
+
+            return await GetDoctorByIdAsync(id);
         }
 
         public async Task DeleteDoctorAsync(int id)
         {
-            await _doctorRepository.DeleteAsync(id);
+            var doctor = await GetDoctorEntityIdAsync(id);
+
+            await _doctorRepository.DeleteAsync(doctor.Id);
         }
     }
 }
