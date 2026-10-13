@@ -1,7 +1,7 @@
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Views;
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RDoctor
 {
     public interface IDoctorRepository
     {
