@@ -1,7 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RDoctor
 {
     public class DoctorAddressRepository : IDoctorAddress
     {

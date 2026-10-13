@@ -1,4 +1,5 @@
 ﻿using ClinicVp.Repository;
+using ClinicVp.Repository.RDoctor;
 using ClinicVp.Services;
 
 namespace ClinicVp.ConfigurationExtensions
