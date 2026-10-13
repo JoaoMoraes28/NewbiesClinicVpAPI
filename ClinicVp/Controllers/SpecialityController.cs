@@ -17,7 +17,7 @@ namespace ClinicVp.Controllers
         }
 
         [HttpGet("")]
-        async public Task<IActionResult> Get()
+        public async Task<IActionResult> Get()
         {
             var specialitys = await _service.SelectSpeciality();
 
@@ -25,7 +25,7 @@ namespace ClinicVp.Controllers
         }
 
         [HttpPost("")]
-        async public Task<IActionResult> Post([FromBody] SpecialityDto body)
+        public async Task<IActionResult> Post([FromBody] SpecialityDto body)
         {
             var specialityId = await _service.InsertSpeciality(body);
 

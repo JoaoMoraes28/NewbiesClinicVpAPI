@@ -56,9 +56,9 @@ namespace ClinicVp.Controllers
         [HttpDelete("{id:int}")]
         async public Task<IActionResult> Delete(int id)
         {
-            await _service.DeleteRecepcionist(id);
+            var response = await _service.DeleteRecepcionist(id);
 
-            return Ok(); ;
+            return Ok(response);
         }
     }
 }

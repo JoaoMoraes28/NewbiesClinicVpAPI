@@ -1,5 +1,4 @@
-﻿using ClinicVp.DataBase.Services;
-using ClinicVp.Repository;
+﻿using ClinicVp.Repository;
 using ClinicVp.Services;
 
 namespace ClinicVp.ConfigurationExtensions
@@ -10,11 +9,10 @@ namespace ClinicVp.ConfigurationExtensions
         public static IServiceCollection AddAplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorAddress, DoctorAddressRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
-
-
             services.AddScoped<ISpeciality, SpecialityRepository>();
             services.AddScoped<IRecepcionist, RecepcionistRepository>();
             services.AddScoped<IUf, UfRepository>();

@@ -10,6 +10,7 @@ namespace ClinicVp.DataBase
         public DbSet<Speciality> Specialitys { get; set; }
         public DbSet<Uf> Ufs { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<DoctorData> DoctorsData { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<DoctorAddress> DoctorAddresses { get; set; }
         public DbSet<PatientAddress> PatientAddresses { get; set; }
