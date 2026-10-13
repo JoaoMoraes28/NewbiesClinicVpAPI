@@ -28,7 +28,6 @@ namespace ClinicVp.DataBase.Models
         [Column("must_change_password")]
         [Required(ErrorMessage = "O valor referente a trocas de senha é obrigatório.")]
         public bool MustChangePassword { get; set; }
-
         public Recepcionist(string name, string cpf, string email, EGender gender, string phone,
             string photo, decimal salary, EStatusEmployee status,
             string password)
