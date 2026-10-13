@@ -1,5 +1,5 @@
-using System;
 using ClinicVp.DataBase.Models.Enums;
+using ClinicVp.DTOs.DoctorAddress;
 
 namespace ClinicVp.DTOs.DoctorDto
 {
@@ -8,7 +8,7 @@ namespace ClinicVp.DTOs.DoctorDto
         public int Id { get; set; }
         public string Name { get; set; }
         public string Crm { get; set; }
-        public int CrmUfId { get; set; }
+        public string CrmUf { get; set; }
         public string Cpf { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -18,12 +18,12 @@ namespace ClinicVp.DTOs.DoctorDto
         public string? Bio { get; set; }
         public DateOnly AdmissionDate { get; set; }
 
-        public DoctorResponseBase(int id, string name, string crm, int crmUfId, string cpf, string email, string phone, string? photo, EGender gender, EStatusEmployee status, string? bio, DateOnly admissionDate)
+        public DoctorResponseBase(int id, string name, string crm, string crmUf, string cpf, string email, string phone, string? photo, EGender gender, EStatusEmployee status, string? bio, DateOnly admissionDate)
         {
             Id = id;
             Name = name;
             Crm = crm;
-            CrmUfId = crmUfId;
+            CrmUf = crmUf;
             Cpf = cpf;
             Email = email;
             Phone = phone;
@@ -39,9 +39,12 @@ namespace ClinicVp.DTOs.DoctorDto
     {
         public DoctorResponseBase Doctor { get; set; }
 
-        public DoctorResponseDto(DoctorResponseBase doctor)
+        public DoctorAddressResponseDto Address { get; set; }
+
+        public DoctorResponseDto(DoctorResponseBase doctor, DoctorAddressResponseDto address)
         {
             Doctor = doctor;
+            Address = address;
         }
     }
 }

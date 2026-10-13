@@ -59,7 +59,7 @@ namespace ClinicVp.Services
 
                 Recepcionist newRecepcionist = new(body.Recepcionist.Name, body.Recepcionist.Cpf,
                     body.Recepcionist.Email, body.Recepcionist.Gender, body.Recepcionist.Phone,
-                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, password);
+                    body.Recepcionist.Photo, body.Recepcionist.Salary, body.Recepcionist.Status, passwordHashed);
 
                 var recepcionist = await _repositoryRecepcionist.Add(newRecepcionist);
 
@@ -106,7 +106,7 @@ namespace ClinicVp.Services
 
         }
 
-        public async Task DeleteRecepcionist(int id)
+        public async Task<ResponseDeleteDefault> DeleteRecepcionist(int id)
         {
             var verifyId = await SelectRecepcionistEntityId(id);
 
@@ -115,7 +115,9 @@ namespace ClinicVp.Services
 
             await _repositoryRecepcionist.Delete(verifyId);
 
-            ResponseDeleteDefault response = new(id, "Recepcionist", $"Recepcionist de id {id} deletado.");
+            ResponseDeleteDefault response = new("Recepcionist", $"Recepcionista de id {id} deletado.");
+
+            return response;
         }
 
         public async Task<RecepcionistResponseDto> FormatRecepcionist(RecepcionistData? recepcionistData)

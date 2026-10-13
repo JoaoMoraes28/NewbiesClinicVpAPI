@@ -1,4 +1,4 @@
-namespace ClinicVp.DTOs.DoctorAddress
+namespace ClinicVp.DTOs.DoctorAddressDto
 {
     public class DoctorAddressWriteDto
     {
@@ -9,6 +9,17 @@ namespace ClinicVp.DTOs.DoctorAddress
         public string Street { get; set; } = string.Empty;
         public string Number { get; set; } = string.Empty;
         public string Cep { get; set; } = string.Empty;
+
+        public DoctorAddressWriteDto(int doctorId, int ufId, string city, string district, string street, string number, string cep)
+        {
+            DoctorId = doctorId;
+            UfId = ufId;
+            City = city;
+            District = district;
+            Street = street;
+            Number = number;
+            Cep = cep;
+        }
     }
 
 }

@@ -16,11 +16,11 @@ namespace ClinicVp.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllAsync() => 
-            await _context.Doctors.ToListAsync();
+        public async Task<IEnumerable<DoctorData>> GetAllAsync() =>
+            await _context.DoctorsData.ToListAsync();
 
-        public async Task<Doctor?> GetByIdAsync(int id) => 
-            await _context.Doctors.FindAsync(id);
+        public async Task<DoctorData?> GetByIdAsync(int id) =>
+            await _context.DoctorsData.FindAsync(id);
 
         public async Task<int> AddAsync(Doctor entity)
         {
@@ -36,14 +36,11 @@ namespace ClinicVp.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Doctor doctor)
         {
-            var doctor = await GetByIdAsync(id);
-            if (doctor != null)
-            {
-                _context.Doctors.Remove(doctor);
-                await _context.SaveChangesAsync();
-            }
+            doctor.Status = EStatusEmployee.DESACTIVE;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Doctor?> GetByCrmAsync(string crm, int crmUfId) =>
@@ -53,6 +50,11 @@ namespace ClinicVp.Repository
             await _context.Doctors.FirstOrDefaultAsync(d => d.Cpf == cpf);
 
         public async Task<IEnumerable<Doctor>> GetActiveDoctorsAsync() =>
-            await _context.Doctors.Where(d => d.Status == EStatusEmployee.ACTIVE ).ToListAsync();
+            await _context.Doctors.Where(d => d.Status == EStatusEmployee.ACTIVE).ToListAsync();
+
+        public async Task<Doctor?> GetByEntityIdAsync(int id)
+        {
+            return await _context.Doctors.FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 }

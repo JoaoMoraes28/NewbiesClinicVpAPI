@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ClinicVp.DataBase.Models;
+using ClinicVp.DataBase.Models.Views;
 
 namespace ClinicVp.Repository
 {
     public interface IDoctorRepository
     {
-        Task<IEnumerable<Doctor>> GetAllAsync();
-        Task<Doctor?> GetByIdAsync(int id);
+        Task<IEnumerable<DoctorData>> GetAllAsync();
+        Task<DoctorData?> GetByIdAsync(int id);
+        Task<Doctor?> GetByEntityIdAsync(int id);
         Task<Doctor?> GetByCpfAsync(string cpf);
         Task<int> AddAsync(Doctor doctor);
         Task UpdateAsync(Doctor doctor);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Doctor doctor);
     }
 }
