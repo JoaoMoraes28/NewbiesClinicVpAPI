@@ -53,12 +53,12 @@ namespace ClinicVp.Controllers
             return Ok(newDoctor);
         }
 
-        [HttpDelete("{id:int}")]
-        async public Task<IActionResult> Delete(int id)
+        [HttpPatch("{id:int}")]
+        async public Task<IActionResult> Patch(int id)
         {
-            await _service.DeleteDoctorAsync(id);
+            var response = await _service.DeleteDoctorAsync(id);
 
-            return Ok(); ;
+            return Ok(response);
         }
     }
 }

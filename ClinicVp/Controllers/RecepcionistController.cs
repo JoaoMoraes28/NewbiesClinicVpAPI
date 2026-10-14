@@ -53,8 +53,8 @@ namespace ClinicVp.Controllers
             return Ok(newRecepcionist);
         }
 
-        [HttpDelete("{id:int}")]
-        async public Task<IActionResult> Delete(int id)
+        [HttpPatch("{id:int}")]
+        async public Task<IActionResult> Patch(int id)
         {
             var response = await _service.DeleteRecepcionist(id);
 

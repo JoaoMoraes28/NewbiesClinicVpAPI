@@ -100,10 +100,11 @@ namespace ClinicVp.Services
             return await GetPatientByIdAsync(id);
         }
 
-        public async Task DeletePatientAsync(int id)
+        public async Task<ResponseDeleteDefault> DeletePatientAsync(int id)
         {
-            var patient = await GetPatientEntityIdAsync(id);
+            var patient = await GetPatientEntityIdAsync(id) ?? throw new KeyNotFoundException("Paciente não encontrado.");
             await _patientRepository.DeleteAsync(patient);
+            return new ResponseDeleteDefault("Patient", $"Paciente de id {id} deletado com sucesso.");
         }
 
         public async Task<PatientResponseDto> FormatPatient(PatientData? patientData)
