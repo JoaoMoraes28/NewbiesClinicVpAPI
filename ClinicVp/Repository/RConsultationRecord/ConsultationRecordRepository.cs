@@ -17,6 +17,7 @@ namespace ClinicVp.Repository.RConsultationRecord
         public async Task<int> Add(ConsultationRecord consultationRecord)
         {
             var id = await _db.ConsultationsRecord.AddAsync(consultationRecord);
+            await _db.SaveChangesAsync();
 
             return id.Entity.Id;
         }
