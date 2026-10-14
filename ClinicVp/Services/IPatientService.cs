@@ -10,6 +10,6 @@ namespace ClinicVp.Services
         Task<PatientResponseDto?> GetPatientByIdAsync(int id);
         Task<ResponseWriteDefault> CreatePatientAsync(PatientWriteDto dto);
         Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto);
-        Task DeletePatientAsync(int id);
+        Task<ResponseDeleteDefault> DeletePatientAsync(int id);
     }
 }
