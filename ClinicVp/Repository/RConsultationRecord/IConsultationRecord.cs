@@ -1,6 +1,6 @@
 ﻿using ClinicVp.DataBase.Models;
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RConsultationRecord
 {
     public interface IConsultationRecord
     {

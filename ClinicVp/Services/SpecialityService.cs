@@ -1,7 +1,8 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DTOs;
-using ClinicVp.Repository;
+using ClinicVp.DTOs.ResponsesDefault;
+using ClinicVp.Repository.RSpeciality;
 
 namespace ClinicVp.Services
 {
@@ -22,13 +23,13 @@ namespace ClinicVp.Services
             return await _repository.GetAll();
         }
 
-        public async Task<int> InsertSpeciality(SpecialityDto specialityDto)
+        public async Task<ResponseWriteDefault> InsertSpeciality(SpecialityDto specialityDto)
         {
             Speciality speciality = new(specialityDto.SpecialityName);
 
             var id = await _repository.Add(speciality);
 
-            return id;
+            return new ResponseWriteDefault(id, "Especialidade criada com sucesso.");
         }
     }
 }

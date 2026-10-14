@@ -4,7 +4,7 @@ using ClinicVp.DataBase.Models.Enums;
 using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RRecepcionist
 {
     public class RecepcionistRepository : IRecepcionist
     {

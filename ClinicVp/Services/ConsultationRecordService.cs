@@ -1,7 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DTOs.ConsultationRecord;
-using ClinicVp.Repository;
+using ClinicVp.Repository.RConsultationRecord;
 
 namespace ClinicVp.Services
 {

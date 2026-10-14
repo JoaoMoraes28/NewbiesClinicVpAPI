@@ -1,9 +1,8 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
-using ClinicVp.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicVp
+namespace ClinicVp.Repository.RRecepcionist
 {
     public class RecepcionistAddressRepository : IRecepcoinistAddress
     {

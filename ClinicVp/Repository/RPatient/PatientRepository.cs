@@ -1,12 +1,10 @@
 using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
-using ClinicVp.DataBase.Models.Enums;
-using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RPatient
 {
     public class PatientRepository : IPatientRepository
     {
@@ -17,10 +15,10 @@ namespace ClinicVp.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Patient>> GetAllAsync() => 
+        public async Task<IEnumerable<Patient>> GetAllAsync() =>
             await _context.Patients.ToListAsync();
 
-        public async Task<Patient?> GetByIdAsync(int id) => 
+        public async Task<Patient?> GetByIdAsync(int id) =>
             await _context.Patients.FindAsync(id);
 
         public async Task<int> AddAsync(Patient entity)
