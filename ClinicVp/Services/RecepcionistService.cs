@@ -4,7 +4,7 @@ using ClinicVp.DataBase.Models.Views;
 using ClinicVp.DTOs.RecepcionistAddress;
 using ClinicVp.DTOs.RecepcionistDto;
 using ClinicVp.DTOs.ResponsesDefault;
-using ClinicVp.Repository;
+using ClinicVp.Repository.RRecepcionist;
 using System.Security.Cryptography;
 
 namespace ClinicVp.Services

@@ -2,7 +2,7 @@
 using ClinicVp.DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RUf
 {
     public class UfRepository : IUf
     {

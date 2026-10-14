@@ -1,7 +1,11 @@
-﻿using ClinicVp.Repository;
+﻿using ClinicVp.Repository.RConsultationRecord;
 using ClinicVp.Repository.RContract;
 using ClinicVp.Repository.RContractDoctor;
 using ClinicVp.Repository.RDoctor;
+using ClinicVp.Repository.RPatient;
+using ClinicVp.Repository.RRecepcionist;
+using ClinicVp.Repository.RSpeciality;
+using ClinicVp.Repository.RUf;
 using ClinicVp.Services;
 
 namespace ClinicVp.ConfigurationExtensions

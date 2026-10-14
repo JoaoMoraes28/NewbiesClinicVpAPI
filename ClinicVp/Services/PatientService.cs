@@ -1,8 +1,8 @@
 
 using ClinicVp.DataBase.DTOs;
 using ClinicVp.DataBase.Models;
-using ClinicVp.Repository;
 using ClinicVp.DTOs.PatientDto;
+using ClinicVp.Repository.RPatient;
 
 namespace ClinicVp.Services
 {

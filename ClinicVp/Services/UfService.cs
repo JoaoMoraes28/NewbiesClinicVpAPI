@@ -1,5 +1,5 @@
 ﻿using ClinicVp.DataBase.Models;
-using ClinicVp.Repository;
+using ClinicVp.Repository.RUf;
 
 namespace ClinicVp.Services
 {
