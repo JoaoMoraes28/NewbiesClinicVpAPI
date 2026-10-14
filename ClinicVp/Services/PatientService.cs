@@ -1,7 +1,9 @@
-
-using ClinicVp.DataBase.DTOs;
+using ClinicVp.DataBase.DTOs.PatientAddress;
 using ClinicVp.DataBase.Models;
+using ClinicVp.DataBase.Models.Views;
+using ClinicVp.DTOs.PatientAddressDto;
 using ClinicVp.DTOs.PatientDto;
+using ClinicVp.DTOs.ResponsesDefault;
 using ClinicVp.Repository.RPatient;
 
 namespace ClinicVp.Services
@@ -9,85 +11,123 @@ namespace ClinicVp.Services
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
+        private readonly IPatientAddress _addressRepository; 
 
-        public PatientService(IPatientRepository patientRepository)
+        public PatientService(IPatientRepository patientRepository, IPatientAddress addressRepository)
         {
             _patientRepository = patientRepository;
+            _addressRepository = addressRepository;
         }
 
         public async Task<IEnumerable<PatientResponseDto>> GetAllPatientsAsync()
         {
             var patients = await _patientRepository.GetAllAsync();
 
-            return patients.Select(p => new PatientResponseDto
+            List<PatientResponseDto> patientsList = [];
+
+            foreach (var item in patients)
             {
-                Id = p.Id,
-                Name = p.Name,
-                Cpf = p.Cpf,
-                Email = p.Email,
-                Phone = p.Phone,
-                Professional = p.Professional,
-                BornDate = p.BornDate,
-                Active = p.Active
-            });
+                var patient = await FormatPatient(item);
+                patientsList.Add(patient);
+            }
+
+            return patientsList;
         }
 
         public async Task<PatientResponseDto?> GetPatientByIdAsync(int id)
         {
-            var p = await _patientRepository.GetByIdAsync(id);
-            if (p == null) return null;
-
-            return new PatientResponseDto
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Cpf = p.Cpf,
-                Email = p.Email,
-                Phone = p.Phone,
-                Professional = p.Professional,
-                BornDate = p.BornDate,
-                Active = p.Active
-            };
+            var patient = await _patientRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Paciente não encontrado.");
+            Console.WriteLine(patient);
+            return await FormatPatient(patient);
         }
 
-        public async Task<PatientResponseDto> CreatePatientAsync(PatientWriteDto dto)
+        public async Task<Patient> GetPatientEntityIdAsync(int id)
         {
+            return await _patientRepository.GetByEntityIdAsync(id) ?? throw new KeyNotFoundException("Paciente não encontrado.");
+        }
 
-            var patient = new Patient(
-                dto.Name, dto.Cpf, dto.Email, dto.Gender,
-                dto.Phone, dto.Photo ?? string.Empty, dto.CivilState,
-                dto.BornDate, dto.Professional, dto.BloodType,
-                dto.Weight, dto.Height, dto.PhoneEmergency, dto.Notes
-            );
-
-            await _patientRepository.AddAsync(patient);
-
-            return new PatientResponseDto
+        public async Task<ResponseWriteDefault> CreatePatientAsync(PatientWriteDto dto)
+        {
+            try
             {
-                Id = patient.Id,
-                Name = patient.Name,
-                Cpf = patient.Cpf,
-                Email = patient.Email,
-                Phone = patient.Phone,
-                Professional = patient.Professional,
-                BornDate = patient.BornDate,
-                Active = patient.Active
-            };
+
+                var patient = new Patient(
+                    dto.Patient.Name, dto.Patient.Cpf, dto.Patient.Email, dto.Patient.Gender,
+                    dto.Patient.Phone, dto.Patient.Photo ?? string.Empty, dto.Patient.CivilState,
+                    dto.Patient.BornDate, dto.Patient.Professional, dto.Patient.BloodType,
+                    dto.Patient.Weight, dto.Patient.Height, dto.Patient.PhoneEmergency, dto.Patient.Notes
+                );
+
+                var idPatient = await _patientRepository.AddAsync(patient);
+
+                var address = new PatientAddress(
+                    idPatient, dto.Address.UfId, dto.Address.City, dto.Address.District,
+                    dto.Address.Street, dto.Address.Number, dto.Address.Cep
+                );
+
+                await _addressRepository.AddAsync(address);
+               
+
+                return new ResponseWriteDefault(idPatient, "Paciente criado com sucesso.");
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto)
         {
-            var patient = await _patientRepository.GetByIdAsync(id);
-            if (patient == null) throw new KeyNotFoundException("Paciente não encontrado.");
+            var patient = await GetPatientEntityIdAsync(id);
+
+            patient.Name = dto.Patient.Name;
+            patient.Cpf = dto.Patient.Cpf;
+            patient.Email = dto.Patient.Email;
+            patient.Gender = dto.Patient.Gender;
+            patient.Phone = dto.Patient.Phone;
+            patient.Photo = dto.Patient.Photo ?? string.Empty;
+            patient.CivilState = dto.Patient.CivilState;
+            patient.BornDate = dto.Patient.BornDate;
+            patient.Professional = dto.Patient.Professional;
+            patient.BloodType = dto.Patient.BloodType;
+            patient.Weight = dto.Patient.Weight;
+            patient.Height = dto.Patient.Height;
+            patient.PhoneEmergency = dto.Patient.PhoneEmergency;
+            patient.Notes = dto.Patient.Notes;
 
             await _patientRepository.UpdateAsync(patient);
-            
+
             return await GetPatientByIdAsync(id);
         }
 
         public async Task DeletePatientAsync(int id)
         {
-            await _patientRepository.DeleteAsync(id);
+            var patient = await GetPatientEntityIdAsync(id);
+            await _patientRepository.DeleteAsync(patient);
+        }
+
+        public async Task<PatientResponseDto> FormatPatient(PatientData? patientData)
+        {
+            try
+            {
+                if (patientData == null) throw new KeyNotFoundException("Dados do paciente não encontrados.");
+
+                var patient = new PatientResponseBase(
+                    patientData.Id, patientData.Name, patientData.Cpf, patientData.Email,
+                    patientData.Phone, patientData.Professional, patientData.BornDate, patientData.Active
+                );
+
+                var addressDto = new PatientAddressResponseDto(
+                    patientData.UfAddress, patientData.City, patientData.District,
+                    patientData.Street, patientData.Number, patientData.Cep
+                );
+
+                return new PatientResponseDto(patient, addressDto);
+            }
+            catch
+            {
+                throw new KeyNotFoundException("Erro ao formatar os dados do paciente.");
+            }
         }
     }
 }
