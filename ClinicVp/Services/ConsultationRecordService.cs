@@ -30,7 +30,7 @@ namespace ClinicVp.Services
 
             var id = await _repository.Add(newConsultationRecord);
 
-            return new ResponseWriteDefault(id, "Consulta agendada com sucesso.");
+            return new ResponseWriteDefault(id, "Registro da consulta salva com sucesso.");
         }
 
     }
