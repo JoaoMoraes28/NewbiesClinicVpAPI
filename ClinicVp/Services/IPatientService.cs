@@ -1,5 +1,6 @@
 using ClinicVp.DataBase.DTOs;
 using ClinicVp.DTOs.PatientDto;
+using ClinicVp.DTOs.ResponsesDefault;
 
 namespace ClinicVp.Services
 {
@@ -7,7 +8,7 @@ namespace ClinicVp.Services
     {
         Task<IEnumerable<PatientResponseDto>> GetAllPatientsAsync();
         Task<PatientResponseDto?> GetPatientByIdAsync(int id);
-        Task<PatientResponseDto> CreatePatientAsync(PatientWriteDto dto);
+        Task<ResponseWriteDefault> CreatePatientAsync(PatientWriteDto dto);
         Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto);
         Task DeletePatientAsync(int id);
     }

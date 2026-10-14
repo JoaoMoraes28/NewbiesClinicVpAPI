@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
+// Add services to the swagger generator
+builder.Services.AddSwaggerGen();
 // Injeção de dependência
 builder.Services.AddAplicationServices();
 // Configuração extra do banco de dados
@@ -20,6 +22,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseExceptionHandler();
