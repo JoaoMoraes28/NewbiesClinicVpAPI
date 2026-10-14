@@ -1,6 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DTOs.ConsultationRecord;
+using ClinicVp.DTOs.ResponsesDefault;
 using ClinicVp.Repository.RConsultationRecord;
 
 namespace ClinicVp.Services
@@ -22,14 +23,14 @@ namespace ClinicVp.Services
             return await _repository.GetAll(id);
         }
 
-        public async Task<int> InsertConsultationRecord(ConsultatitonRecordWriteDto body)
+        public async Task<ResponseWriteDefault> InsertConsultationRecord(ConsultatitonRecordWriteDto body)
         {
             ConsultationRecord newConsultationRecord = new(body.ConsultationId,
                 body.Syntoms, body.Diagnosis, body.Treatment, body.PatientNotes, body.Notes);
 
             var id = await _repository.Add(newConsultationRecord);
 
-            return id;
+            return new ResponseWriteDefault(id, "Consulta agendada com sucesso.");
         }
 
     }

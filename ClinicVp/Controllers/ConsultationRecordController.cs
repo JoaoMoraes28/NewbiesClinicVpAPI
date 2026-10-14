@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicVp.Controllers
 {
-    [Route("[controller]")]
+    [Route("consultation_record")]
     [ApiController]
     public class ConsultationRecordController : ControllerBase
     {

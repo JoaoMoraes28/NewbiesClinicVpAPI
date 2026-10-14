@@ -20,11 +20,14 @@ namespace ClinicVp.DataBase
         public DbSet<ConsultationRecord> ConsultationsRecord { get; set; }
         public DbSet<ContractType> ContractTypes { get; set; }
         public DbSet<ContractDoctor> ContractsDoctor { get; set; }
+        public DbSet<Consultation> Consultations { get; set; }
+        public DbSet<ConsultationData> ConsultationsData { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RecepcionistData>().HasNoKey().ToView("recepcionist_data");
             modelBuilder.Entity<DoctorData>().HasNoKey().ToView("doctor_data");
+            modelBuilder.Entity<ConsultationData>().HasNoKey().ToView("consultation_data");
         }
 
     }

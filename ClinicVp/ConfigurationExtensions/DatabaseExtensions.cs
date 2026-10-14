@@ -20,6 +20,7 @@ namespace ClinicVp.ConfigurationExtensions
             dataSourceBuilder.MapEnum<ECivilState>("civil_state_option");
             dataSourceBuilder.MapEnum<EBloodType>("blood_type_enum");
             dataSourceBuilder.MapEnum<EStatusEmployee>("status_doctor_recepcionist");
+            dataSourceBuilder.MapEnum<EStatusConsultation>("status_consultation");
 
             var dataSource = dataSourceBuilder.Build();
 
@@ -31,6 +32,7 @@ namespace ClinicVp.ConfigurationExtensions
                     o.MapEnum<ECivilState>("civil_state_option");
                     o.MapEnum<EBloodType>("blood_type_enum");
                     o.MapEnum<EStatusEmployee>("status_doctor_recepcionist");
+                    o.MapEnum<EStatusConsultation>("status_consultation");
                 })
             );
 

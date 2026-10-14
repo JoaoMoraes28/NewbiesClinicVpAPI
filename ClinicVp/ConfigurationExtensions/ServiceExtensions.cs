@@ -1,4 +1,5 @@
-﻿using ClinicVp.Repository.RConsultationRecord;
+﻿using ClinicVp.Repository.RConsultation;
+using ClinicVp.Repository.RConsultationRecord;
 using ClinicVp.Repository.RContract;
 using ClinicVp.Repository.RContractDoctor;
 using ClinicVp.Repository.RDoctor;
@@ -27,11 +28,15 @@ namespace ClinicVp.ConfigurationExtensions
             services.AddScoped<IConsultationRecord, ConsultationRecordRepository>();
             services.AddScoped<IContractType, ContractTypeRepository>();
             services.AddScoped<IContractDoctor, ContractDoctorRepository>();
+            services.AddScoped<IConsultation, ConsultationRepository>();
             services.AddScoped<SpecialityService>();
             services.AddScoped<RecepcionistService>();
             services.AddScoped<UfService>();
             services.AddScoped<ContractTypeService>();
+            services.AddScoped<ConsultationRecordService>();
             services.AddScoped<ContractDoctorService>();
+            services.AddScoped<PatientService>();
+            services.AddScoped<ConsultationService>();
 
             return services;
         }

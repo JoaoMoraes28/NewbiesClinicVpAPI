@@ -1,4 +1,4 @@
-using ClinicVp.DTOs;
+using ClinicVp.DTOs.SpecialityDto;
 using ClinicVp.Services;
 using Microsoft.AspNetCore.Mvc;
 

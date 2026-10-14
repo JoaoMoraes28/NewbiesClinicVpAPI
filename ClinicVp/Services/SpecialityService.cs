@@ -1,7 +1,7 @@
 ﻿using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
-using ClinicVp.DTOs;
 using ClinicVp.DTOs.ResponsesDefault;
+using ClinicVp.DTOs.SpecialityDto;
 using ClinicVp.Repository.RSpeciality;
 
 namespace ClinicVp.Services

@@ -17,10 +17,10 @@ namespace ClinicVp.Repository.RDoctor
         }
 
         public async Task<IEnumerable<DoctorData>> GetAllAsync() =>
-            await _context.DoctorsData.ToListAsync();
+            await _context.DoctorsData.Where(d => d.Status == EStatusEmployee.ACTIVE).ToListAsync();
 
         public async Task<DoctorData?> GetByIdAsync(int id) =>
-            await _context.DoctorsData.FindAsync(id);
+            await _context.DoctorsData.FirstOrDefaultAsync(d => d.Status == EStatusEmployee.ACTIVE);
 
         public async Task<int> AddAsync(Doctor entity)
         {

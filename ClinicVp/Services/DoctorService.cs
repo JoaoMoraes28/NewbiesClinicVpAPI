@@ -104,11 +104,13 @@ namespace ClinicVp.Services
             return await GetDoctorByIdAsync(id);
         }
 
-        public async Task DeleteDoctorAsync(int id)
+        public async Task<ResponseDeleteDefault> DeleteDoctorAsync(int id)
         {
             var doctor = await GetDoctorEntityIdAsync(id);
 
             await _doctorRepository.DeleteAsync(doctor);
+
+            return new ResponseDeleteDefault("Doctor", $"Doutor de id {id} deletado com sucesso.");
         }
 
         public async Task<DoctorResponseDto> FormatDoctor(DoctorData? doctorData)
