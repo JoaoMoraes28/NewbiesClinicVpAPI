@@ -12,6 +12,7 @@ namespace ClinicVp.DataBase
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorData> DoctorsData { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<PatientData> PatientsData { get; set; }
         public DbSet<DoctorAddress> DoctorAddresses { get; set; }
         public DbSet<PatientAddress> PatientAddresses { get; set; }
         public DbSet<Recepcionist> Recepcionists { get; set; }
@@ -28,6 +29,7 @@ namespace ClinicVp.DataBase
             modelBuilder.Entity<RecepcionistData>().HasNoKey().ToView("recepcionist_data");
             modelBuilder.Entity<DoctorData>().HasNoKey().ToView("doctor_data");
             modelBuilder.Entity<ConsultationData>().HasNoKey().ToView("consultation_data");
+            modelBuilder.Entity<PatientData>().HasNoKey().ToView("patient_data");
         }
 
     }

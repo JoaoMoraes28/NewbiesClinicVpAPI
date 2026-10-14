@@ -1,6 +1,9 @@
 using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
+using ClinicVp.DataBase.Models.Enums;
+using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 
 
@@ -15,11 +18,11 @@ namespace ClinicVp.Repository.RPatient
             _context = context;
         }
 
-        public async Task<IEnumerable<Patient>> GetAllAsync() =>
-            await _context.Patients.ToListAsync();
+        public async Task<IEnumerable<PatientData>> GetAllAsync() =>
+            await _context.PatientsData.Where(p => p.Active == true).ToListAsync();
 
-        public async Task<Patient?> GetByIdAsync(int id) =>
-            await _context.Patients.FindAsync(id);
+        public async Task<PatientData?> GetByIdAsync(int id) =>
+            await _context.PatientsData.FirstOrDefaultAsync(p => p.Id == id && p.Active == true);
 
         public async Task<int> AddAsync(Patient entity)
         {
@@ -34,17 +37,20 @@ namespace ClinicVp.Repository.RPatient
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Patient patient)
         {
-            var patient = await GetByIdAsync(id);
-            if (patient != null)
-            {
-                _context.Patients.Remove(patient);
-                await _context.SaveChangesAsync();
-            }
+            patient.Active = false;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Patient>> GetActivePatientsAsync() =>
-            await _context.Patients.Where(p => p.Active).ToListAsync();
+        public async Task<IEnumerable<PatientData>> GetActivePatientsAsync() =>
+            await _context.PatientsData.Where(p => p.Active == true).ToListAsync();
+
+
+
+        public async Task<Patient?> GetByEntityIdAsync(int id)
+        {
+            return await _context.Patients.FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
