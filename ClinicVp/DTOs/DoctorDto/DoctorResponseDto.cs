@@ -18,7 +18,11 @@ namespace ClinicVp.DTOs.DoctorDto
         public string? Bio { get; set; }
         public DateOnly AdmissionDate { get; set; }
 
-        public DoctorResponseBase(int id, string name, string crm, string crmUf, string cpf, string email, string phone, string? photo, EGender gender, EStatusEmployee status, string? bio, DateOnly admissionDate)
+        public string? Contract { get; set; }
+
+        public DoctorResponseBase(int id, string name, string crm, string crmUf,
+            string cpf, string email, string phone, string? photo, EGender gender,
+            EStatusEmployee status, string? bio, DateOnly admissionDate, string? contract)
         {
             Id = id;
             Name = name;
@@ -32,6 +36,7 @@ namespace ClinicVp.DTOs.DoctorDto
             Status = status;
             Bio = bio;
             AdmissionDate = admissionDate;
+            Contract = contract;
         }
     }
 

@@ -5,15 +5,12 @@
 
         public int Id { get; set; }
 
-        public string Email { get; set; }
+        public string Message { get; set; }
 
-        public string Password { get; set; }
-
-        public ResponseWriteDefault(int id, string email, string password)
+        public ResponseWriteDefault(int id, string message)
         {
             Id = id;
-            Email = email;
-            Password = password;
+            Message = message;
         }
 
     }

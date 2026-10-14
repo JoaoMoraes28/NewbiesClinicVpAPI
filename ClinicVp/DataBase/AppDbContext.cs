@@ -18,6 +18,8 @@ namespace ClinicVp.DataBase
         public DbSet<RecepcionistData> RecepcionistData { get; set; }
         public DbSet<RecepcionistAddress> RecepcionistAddress { get; set; }
         public DbSet<ConsultationRecord> ConsultationsRecord { get; set; }
+        public DbSet<ContractType> ContractTypes { get; set; }
+        public DbSet<ContractDoctor> ContractsDoctor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

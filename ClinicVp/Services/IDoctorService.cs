@@ -7,7 +7,7 @@ namespace ClinicVp.Services
     {
         Task<IEnumerable<DoctorResponseDto>> GetAllDoctorsAsync();
         Task<DoctorResponseDto?> GetDoctorByIdAsync(int id);
-        Task<ResponseWriteDefault> CreateDoctorAsync(DoctorWriteDto dto);
+        Task<ResponseWriteEmployee> CreateDoctorAsync(DoctorWriteDto dto);
         Task<DoctorResponseDto> UpdateDoctorAsync(int id, DoctorWriteDto dto);
         Task DeleteDoctorAsync(int id);
     }

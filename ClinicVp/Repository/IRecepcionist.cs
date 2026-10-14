@@ -10,7 +10,6 @@ namespace ClinicVp.Repository
 
         Task<List<RecepcionistData>> GetAll();
 
-
         Task<RecepcionistData?> GetId(int id);
 
         Task<Recepcionist?> GetEntityId(int id);
