@@ -5,7 +5,7 @@ using ClinicVp.DataBase.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace ClinicVp.Repository
+namespace ClinicVp.Repository.RDoctor
 {
     public class DoctorRepository : IDoctorRepository
     {

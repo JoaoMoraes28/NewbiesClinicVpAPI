@@ -1,6 +1,7 @@
 ﻿using ClinicVp.Repository;
 using ClinicVp.Repository.RContract;
 using ClinicVp.Repository.RContractDoctor;
+using ClinicVp.Repository.RDoctor;
 using ClinicVp.Services;
 
 namespace ClinicVp.ConfigurationExtensions
