@@ -156,7 +156,7 @@ O desenvolvimento deste projeto tem como objetivos:
 **João Moraes**
 
 - GitHub: [@JoaoMoraes28](https://github.com/JoaoMoraes28)
-- Linkedin: [@Linkedin]()
+- Linkedin: [@Linkedin](https://www.linkedin.com/in/jo%C3%A3o-victor-santos-de-moraes-0b6532270/?isSelfProfile=true)
 ---
 
 **Sidney Aragão**
