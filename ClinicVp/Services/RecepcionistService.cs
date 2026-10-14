@@ -50,7 +50,7 @@ namespace ClinicVp.Services
             return await _repositoryRecepcionist.GetEntityId(id) ?? throw new KeyNotFoundException();
         }
 
-        public async Task<ResponseWriteDefault> InsertRecepcionist(RecepcionistWriteDto body)
+        public async Task<ResponseWriteEmployee> InsertRecepcionist(RecepcionistWriteDto body)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace ClinicVp.Services
 
                 await _repositoryAddress.Add(newAddress);
 
-                ResponseWriteDefault response = new(recepcionist.Id, recepcionist.Email, password);
+                ResponseWriteEmployee response = new(recepcionist.Id, recepcionist.Email, password);
 
                 return response;
             }

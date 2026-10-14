@@ -48,7 +48,7 @@ namespace ClinicVp.Services
             return await _doctorRepository.GetByEntityIdAsync(id) ?? throw new KeyNotFoundException("Médico não encontrado.");
         }
 
-        public async Task<ResponseWriteDefault> CreateDoctorAsync(DoctorWriteDto dto)
+        public async Task<ResponseWriteEmployee> CreateDoctorAsync(DoctorWriteDto dto)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace ClinicVp.Services
 
                 await _addressRepository.AddAsync(address);
 
-                var response = new ResponseWriteDefault(idDoctor, dto.Doctor.Email, password);
+                var response = new ResponseWriteEmployee(idDoctor, dto.Doctor.Email, password);
 
                 return response;
             }
@@ -118,7 +118,7 @@ namespace ClinicVp.Services
 
                 var doctor = new DoctorResponseBase(doctorData.Id, doctorData.Name, doctorData.Crm, doctorData.UfCrm,
                     doctorData.Cpf, doctorData.Email, doctorData.Phone, doctorData.Photo, doctorData.Gender,
-                    doctorData.Status, doctorData.Bio, doctorData.AdmissionDate);
+                    doctorData.Status, doctorData.Bio, doctorData.AdmissionDate, doctorData.Contract);
 
                 var address = new DoctorAddressResponseDto(doctorData.UfAddress, doctorData.City, doctorData.District,
                     doctorData.Street, doctorData.Number, doctorData.Cep);

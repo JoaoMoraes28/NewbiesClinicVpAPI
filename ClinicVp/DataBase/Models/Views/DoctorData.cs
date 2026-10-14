@@ -43,7 +43,7 @@ namespace ClinicVp.DataBase.Models.Views
         public bool MustChangePassword { get; set; }
 
         [Column("contract")]
-        public string Contract { get; set; }
+        public string? Contract { get; set; }
 
         [Column("uf_crm")]
         public string UfCrm { get; set; }
@@ -68,7 +68,7 @@ namespace ClinicVp.DataBase.Models.Views
 
         public DoctorData(
         int id, string name, DateOnly admissionDate, string crm, string cpf, string phone, string email,
-        string? bio, string photo, EStatusEmployee status, EGender gender, bool mustChangePassword, string contract,
+        string? bio, string photo, EStatusEmployee status, EGender gender, bool mustChangePassword, string? contract,
         string ufCrm, string ufAddress, string city, string district, string street, string number, string cep)
         {
             Id = id;
