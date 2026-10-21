@@ -1,5 +1,4 @@
 using ClinicVp.DataBase.DTOs.PatientAddress;
-using ClinicVp.DataBase.Models.Enums;
 
 
 namespace ClinicVp.DTOs.PatientDto
@@ -37,6 +36,24 @@ namespace ClinicVp.DTOs.PatientDto
         {
             Patient = patient;
             Address = address;
+        }
+    }
+
+    public class PatientResponsePreviewDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string? Photo { get; set; }
+        public string Cpf { get; set; }
+        public string Phone { get; set; }
+
+        public PatientResponsePreviewDto(int id, string name, string? photo, string cpf, string phone)
+        {
+            Id = id;
+            Name = name;
+            Photo = photo;
+            Cpf = cpf;
+            Phone = phone;
         }
     }
 }

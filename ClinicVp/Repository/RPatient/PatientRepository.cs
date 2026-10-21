@@ -1,9 +1,8 @@
 using ClinicVp.DataBase;
 using ClinicVp.DataBase.Models;
-using ClinicVp.DataBase.Models.Enums;
 using ClinicVp.DataBase.Models.Views;
+using ClinicVp.DTOs.PatientDto;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
 
 
 
@@ -47,10 +46,14 @@ namespace ClinicVp.Repository.RPatient
             await _context.PatientsData.Where(p => p.Active == true).ToListAsync();
 
 
-
         public async Task<Patient?> GetByEntityIdAsync(int id)
         {
             return await _context.Patients.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientPreview()
+        {
+            return await _context.Patients.OrderBy(p => p.Name).Select(p => new PatientResponsePreviewDto(p.Id, p.Name, p.Photo, p.Cpf, p.Phone)).ToListAsync();
         }
     }
 }

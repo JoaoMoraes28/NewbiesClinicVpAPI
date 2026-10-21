@@ -1,5 +1,6 @@
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Views;
+using ClinicVp.DTOs.PatientDto;
 
 namespace ClinicVp.Repository.RPatient
 {
@@ -7,6 +8,8 @@ namespace ClinicVp.Repository.RPatient
     public interface IPatientRepository
     {
         Task<IEnumerable<PatientData>> GetAllAsync();
+
+        Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientPreview();
 
         Task<PatientData?> GetByIdAsync(int id);
 
