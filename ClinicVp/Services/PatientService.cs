@@ -1,7 +1,6 @@
 using ClinicVp.DataBase.DTOs.PatientAddress;
 using ClinicVp.DataBase.Models;
 using ClinicVp.DataBase.Models.Views;
-using ClinicVp.DTOs.PatientAddressDto;
 using ClinicVp.DTOs.PatientDto;
 using ClinicVp.DTOs.ResponsesDefault;
 using ClinicVp.Repository.RPatient;
@@ -11,7 +10,7 @@ namespace ClinicVp.Services
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
-        private readonly IPatientAddress _addressRepository; 
+        private readonly IPatientAddress _addressRepository;
 
         public PatientService(IPatientRepository patientRepository, IPatientAddress addressRepository)
         {
@@ -66,7 +65,7 @@ namespace ClinicVp.Services
                 );
 
                 await _addressRepository.AddAsync(address);
-               
+
 
                 return new ResponseWriteDefault(idPatient, "Paciente criado com sucesso.");
             }
@@ -129,6 +128,11 @@ namespace ClinicVp.Services
             {
                 throw new KeyNotFoundException("Erro ao formatar os dados do paciente.");
             }
+        }
+
+        public async Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientsPreviewAsync()
+        {
+            return await _patientRepository.GetAllPatientPreview();
         }
     }
 }

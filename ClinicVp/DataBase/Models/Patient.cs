@@ -40,7 +40,7 @@ namespace ClinicVp.DataBase.Models
         public string? Notes { get; set; }
 
         [Column("record_date")]
-        public DateOnly RecordDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow) ;
+        public DateOnly RecordDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
         [Column("active")]
         [Required]

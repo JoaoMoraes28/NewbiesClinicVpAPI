@@ -25,6 +25,14 @@ namespace ClinicVp.Controllers
             return Ok(patients);
         }
 
+        [HttpGet("preview")]
+        async public Task<IActionResult> GetAllPreview()
+        {
+            var patients = await _service.GetAllPatientsPreviewAsync();
+
+            return Ok(patients);
+        }
+
         [HttpGet("{id:int}")]
         async public Task<IActionResult> GetId(int id)
         {
