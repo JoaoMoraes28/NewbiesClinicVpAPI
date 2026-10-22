@@ -48,7 +48,7 @@ namespace ClinicVp.DataBase.Models
 
         public Patient(
             string name, string cpf, string email, EGender gender,
-            string phone, string photo, ECivilState civilState,
+            string phone, string? photo, ECivilState civilState,
             DateOnly bornDate, string? professional = null,
             EBloodType? bloodType = null, decimal? weight = null,
             int? height = null, string? phoneEmergency = null, string? notes = null)
