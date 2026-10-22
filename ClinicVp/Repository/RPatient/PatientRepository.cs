@@ -48,12 +48,12 @@ namespace ClinicVp.Repository.RPatient
 
         public async Task<Patient?> GetByEntityIdAsync(int id)
         {
-            return await _context.Patients.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Patients.Where(p => p.Active).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientPreview()
         {
-            return await _context.Patients.OrderBy(p => p.Name).Select(p => new PatientResponsePreviewDto(p.Id, p.Name, p.Photo, p.Cpf, p.Phone)).ToListAsync();
+            return await _context.Patients.Where(p => p.Active).OrderBy(p => p.Name).Select(p => new PatientResponsePreviewDto(p.Id, p.Name, p.Photo, p.Cpf, p.Phone)).ToListAsync();
         }
     }
 }

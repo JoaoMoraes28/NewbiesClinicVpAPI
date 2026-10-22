@@ -10,7 +10,7 @@ namespace ClinicVp.Exceptions
 
             int statusCode;
             string message;
-            Console.WriteLine(exception);
+
             switch (exception)
             {
                 case Microsoft.EntityFrameworkCore.DbUpdateException:

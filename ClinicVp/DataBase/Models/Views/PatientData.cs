@@ -24,7 +24,7 @@ namespace ClinicVp.DataBase.Models.Views
         public string Phone { get; set; }
 
         [Column("email")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Column("civil_state")]
         public ECivilState CivilState { get; set; }
@@ -79,7 +79,7 @@ namespace ClinicVp.DataBase.Models.Views
 
         public PatientData(
             int id, string name, string? professional, string cpf, EGender gender, string phone,
-            string? email, ECivilState civilState, string? photo, EBloodType? bloodType, decimal? weight,
+            string email, ECivilState civilState, string? photo, EBloodType? bloodType, decimal? weight,
             int? height, DateOnly bornDate, string? phoneEmergency, string? notes,
             DateOnly recordDate, bool active, int medicalRecordId, string ufAddress,
             string city, string district, string street, string number, string cep)
