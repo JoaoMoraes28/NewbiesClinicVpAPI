@@ -36,13 +36,18 @@ namespace ClinicVp.Services
         public async Task<PatientResponseDto?> GetPatientByIdAsync(int id)
         {
             var patient = await _patientRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Paciente não encontrado.");
-            Console.WriteLine(patient);
+
             return await FormatPatient(patient);
         }
 
         public async Task<Patient> GetPatientEntityIdAsync(int id)
         {
             return await _patientRepository.GetByEntityIdAsync(id) ?? throw new KeyNotFoundException("Paciente não encontrado.");
+        }
+
+        public async Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientsPreviewAsync()
+        {
+            return await _patientRepository.GetAllPatientPreview();
         }
 
         public async Task<ResponseWriteDefault> CreatePatientAsync(PatientWriteDto dto)
@@ -77,26 +82,44 @@ namespace ClinicVp.Services
 
         public async Task<PatientResponseDto> UpdatePatientAsync(int id, PatientWriteDto dto)
         {
-            var patient = await GetPatientEntityIdAsync(id);
+            try
+            {
+                var patient = await GetPatientEntityIdAsync(id);
 
-            patient.Name = dto.Patient.Name;
-            patient.Cpf = dto.Patient.Cpf;
-            patient.Email = dto.Patient.Email;
-            patient.Gender = dto.Patient.Gender;
-            patient.Phone = dto.Patient.Phone;
-            patient.Photo = dto.Patient.Photo ?? string.Empty;
-            patient.CivilState = dto.Patient.CivilState;
-            patient.BornDate = dto.Patient.BornDate;
-            patient.Professional = dto.Patient.Professional;
-            patient.BloodType = dto.Patient.BloodType;
-            patient.Weight = dto.Patient.Weight;
-            patient.Height = dto.Patient.Height;
-            patient.PhoneEmergency = dto.Patient.PhoneEmergency;
-            patient.Notes = dto.Patient.Notes;
+                patient.Name = dto.Patient.Name;
+                patient.Cpf = dto.Patient.Cpf;
+                patient.Email = dto.Patient.Email;
+                patient.Gender = dto.Patient.Gender;
+                patient.Phone = dto.Patient.Phone;
+                patient.Photo = dto.Patient.Photo ?? string.Empty;
+                patient.CivilState = dto.Patient.CivilState;
+                patient.BornDate = dto.Patient.BornDate;
+                patient.Professional = dto.Patient.Professional;
+                patient.BloodType = dto.Patient.BloodType;
+                patient.Weight = dto.Patient.Weight;
+                patient.Height = dto.Patient.Height;
+                patient.PhoneEmergency = dto.Patient.PhoneEmergency;
+                patient.Notes = dto.Patient.Notes;
 
-            await _patientRepository.UpdateAsync(patient);
+                await _patientRepository.UpdateAsync(patient);
 
-            return await GetPatientByIdAsync(id);
+                var address = await _addressRepository.GetId(id);
+
+                address!.Cep = dto.Address.Cep;
+                address!.City = dto.Address.City;
+                address!.District = dto.Address.District;
+                address!.Street = dto.Address.Street;
+                address!.Number = dto.Address.Number;
+                address!.UfId = dto.Address.UfId;
+
+                await _addressRepository.UpdateAsync(address);
+
+                return await GetPatientByIdAsync(id);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<ResponseDeleteDefault> DeletePatientAsync(int id)
@@ -114,7 +137,9 @@ namespace ClinicVp.Services
 
                 var patient = new PatientResponseBase(
                     patientData.Id, patientData.Name, patientData.Cpf, patientData.Email,
-                    patientData.Phone, patientData.Professional, patientData.BornDate, patientData.Active
+                    patientData.Phone, patientData.Professional, patientData.BornDate, patientData.Active,
+                    patientData.PhoneEmergency, patientData.Height, patientData.Weight, patientData.BloodType,
+                    patientData.CivilState, patientData.Gender, patientData.Notes
                 );
 
                 var addressDto = new PatientAddressResponseDto(
@@ -128,11 +153,6 @@ namespace ClinicVp.Services
             {
                 throw new KeyNotFoundException("Erro ao formatar os dados do paciente.");
             }
-        }
-
-        public async Task<IEnumerable<PatientResponsePreviewDto>> GetAllPatientsPreviewAsync()
-        {
-            return await _patientRepository.GetAllPatientPreview();
         }
     }
 }
