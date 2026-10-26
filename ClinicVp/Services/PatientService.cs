@@ -11,13 +11,11 @@ namespace ClinicVp.Services
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IPatientAddress _addressRepository;
-        private readonly Midia _midia;
 
-        public PatientService(IPatientRepository patientRepository, IPatientAddress addressRepository, Midia midia)
+        public PatientService(IPatientRepository patientRepository, IPatientAddress addressRepository)
         {
             _patientRepository = patientRepository;
             _addressRepository = addressRepository;
-            _midia = midia;
         }
 
         public async Task<IEnumerable<PatientResponseDto>> GetAllPatientsAsync()
@@ -56,16 +54,9 @@ namespace ClinicVp.Services
         {
             try
             {
-                string? photoPatient = null;
-
-                if (dto.Patient.Photo != null)
-                {
-                    photoPatient = await _midia.GetUrlPhoto(dto.Patient.Photo);
-                }
-
                 var patient = new Patient(
                     dto.Patient.Name, dto.Patient.Cpf, dto.Patient.Email, dto.Patient.Gender,
-                    dto.Patient.Phone, photoPatient, dto.Patient.CivilState,
+                    dto.Patient.Phone, dto.Patient.Photo, dto.Patient.CivilState,
                     dto.Patient.BornDate, dto.Patient.Professional, dto.Patient.BloodType,
                     dto.Patient.Weight, dto.Patient.Height, dto.Patient.PhoneEmergency, dto.Patient.Notes
                 );

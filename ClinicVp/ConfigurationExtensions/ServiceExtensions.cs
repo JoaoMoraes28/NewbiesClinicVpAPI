@@ -37,7 +37,6 @@ namespace ClinicVp.ConfigurationExtensions
             services.AddScoped<ContractDoctorService>();
             services.AddScoped<PatientService>();
             services.AddScoped<ConsultationService>();
-            services.AddScoped<Midia>();
             services.AddScoped<IPatientAddress, PatientAddressRepository>();
 
             return services;
