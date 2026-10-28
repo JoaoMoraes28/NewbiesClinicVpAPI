@@ -138,7 +138,7 @@ namespace ClinicVp.Services
                     patientData.Id, patientData.Name, patientData.Cpf, patientData.Email,
                     patientData.Phone, patientData.Professional, patientData.BornDate, patientData.Active,
                     patientData.PhoneEmergency, patientData.Height, patientData.Weight, patientData.BloodType,
-                    patientData.CivilState, patientData.Gender, patientData.Notes
+                    patientData.CivilState, patientData.Gender, patientData.Notes, patientData.Photo
                 );
 
                 var addressDto = new PatientAddressResponseDto(
