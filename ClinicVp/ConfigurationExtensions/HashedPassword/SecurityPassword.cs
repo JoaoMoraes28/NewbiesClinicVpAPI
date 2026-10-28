@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClinicVp.ConfigurationExtensions.HashedPassword
 {
-    public class SecurityPassword
+    public static class SecurityPassword
     {
 
         public static string GetPassHashed(string password)
