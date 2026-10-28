@@ -12,6 +12,7 @@ namespace ClinicVp.DTOs.PatientDto
         public string Cpf { get; set; } = string.Empty;
         public string Email { get; set; }
         public string Phone { get; set; } = string.Empty;
+        public string? Photo { get; set; }
         public string? PhoneEmergency { get; set; }
         public int? Height { get; set; }
         public decimal? Weight { get; set; }
@@ -24,7 +25,7 @@ namespace ClinicVp.DTOs.PatientDto
         public string? Notes { get; set; }
 
         public PatientResponseBase(int id, string name, string cpf, string email, string phone, string? professional, DateOnly bornDate, bool active, string? phoneEmergency,
-            int? height, decimal? weight, EBloodType? bloodType, ECivilState civilState, EGender gender, string? notes)
+            int? height, decimal? weight, EBloodType? bloodType, ECivilState civilState, EGender gender, string? notes, string? photo)
         {
             Id = id;
             Name = name;
@@ -41,6 +42,7 @@ namespace ClinicVp.DTOs.PatientDto
             CivilState = civilState;
             Gender = gender;
             Notes = notes;
+            Photo = photo;
         }
     }
 
